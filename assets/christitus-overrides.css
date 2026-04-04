@@ -423,24 +423,6 @@ tbody tr:hover td {
   background-color: rgba(71, 196, 241, 0.06);
 }
 
-/* Custom list bullets */
-ul:not(.list-menu):not(.list-payment):not(.social-icons) > li {
-  list-style: none;
-  padding-left: 1.5em;
-  position: relative;
-}
-
-ul:not(.list-menu):not(.list-payment):not(.social-icons) > li::before {
-  content: '';
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: linear-gradient(45deg, #9AC4F8, #7e7e7e);
-  position: absolute;
-  left: 0;
-  top: 0.55em;
-}
 
 /* -----------------------------------------------------------------------------
    10. FORMS & INPUTS
