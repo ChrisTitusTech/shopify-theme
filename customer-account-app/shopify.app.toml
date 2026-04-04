@@ -2,7 +2,7 @@
 
 client_id = "fa9c876462a449fb62474d3f53a0979b"
 name = "ctt-downloads"
-application_url = "https://cttstore.com"
+application_url = "https://projects.christitus.com/admin.php"
 embedded = true
 
 [build]
@@ -24,6 +24,3 @@ redirect_urls = [ ]
 [pos]
 embedded = false
 
-[web]
-  [web.commands]
-    dev = "node server.js"

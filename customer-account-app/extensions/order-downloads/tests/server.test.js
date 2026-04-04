@@ -4,41 +4,41 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const WEB_DIR = join(__dirname, '../../../web');
+const VPS_DIR = join(__dirname, '../../../../vps');
 
-function loadHtml(clientId = 'test-client-id') {
-  const raw = readFileSync(join(WEB_DIR, 'index.html'), 'utf-8');
-  return raw.replace('__CLIENT_ID__', clientId);
-}
-
-describe('web/server — HTML injection', () => {
-  it('replaces __CLIENT_ID__ placeholder with the provided value', () => {
-    const html = loadHtml('fa9c876462a449fb62474d3f53a0979b');
-    expect(html).toContain('data-api-key="fa9c876462a449fb62474d3f53a0979b"');
-    expect(html).not.toContain('__CLIENT_ID__');
+describe('vps/admin.php — embedded admin page', () => {
+  it('contains the hardcoded Shopify App Bridge client_id', () => {
+    const php = readFileSync(join(VPS_DIR, 'admin.php'), 'utf-8');
+    expect(php).toContain("CLIENT_ID = 'fa9c876462a449fb62474d3f53a0979b'");
   });
 
-  it('result is valid HTML (has <html> and <body>)', () => {
-    const html = loadHtml();
-    expect(html).toContain('<html');
-    expect(html).toContain('<body');
-    expect(html).toContain('</html>');
+  it('outputs the client_id into the App Bridge data-api-key attribute', () => {
+    const php = readFileSync(join(VPS_DIR, 'admin.php'), 'utf-8');
+    expect(php).toContain('data-api-key=');
+    expect(php).toContain('htmlspecialchars(CLIENT_ID');
   });
 
-  it('includes the App Bridge script tag', () => {
-    const html = loadHtml();
-    expect(html).toContain('cdn.shopify.com/shopifycloud/app-bridge.js');
+  it('sets frame-ancestors CSP for Shopify admin embedding', () => {
+    const php = readFileSync(join(VPS_DIR, 'admin.php'), 'utf-8');
+    expect(php).toContain('frame-ancestors');
+    expect(php).toContain('https://admin.shopify.com');
+    expect(php).toContain('https://*.myshopify.com');
   });
 
-  it('includes the frame-ancestors CSP in the server source', () => {
-    const server = readFileSync(join(WEB_DIR, 'server.js'), 'utf-8');
-    expect(server).toContain('frame-ancestors');
-    expect(server).toContain('https://admin.shopify.com');
+  it('includes the App Bridge CDN script', () => {
+    const php = readFileSync(join(VPS_DIR, 'admin.php'), 'utf-8');
+    expect(php).toContain('cdn.shopify.com/shopifycloud/app-bridge.js');
   });
 
-  it('server listens on $PORT or defaults to 3000', () => {
-    const server = readFileSync(join(WEB_DIR, 'server.js'), 'utf-8');
-    expect(server).toContain('process.env.PORT');
-    expect(server).toContain('3000');
+  it('uses htmlspecialchars to prevent XSS on the client_id output', () => {
+    const php = readFileSync(join(VPS_DIR, 'admin.php'), 'utf-8');
+    expect(php).toContain('htmlspecialchars');
+    expect(php).toContain('ENT_QUOTES');
+  });
+
+  it('sets X-Content-Type-Options nosniff header', () => {
+    const php = readFileSync(join(VPS_DIR, 'admin.php'), 'utf-8');
+    expect(php).toContain('X-Content-Type-Options');
+    expect(php).toContain('nosniff');
   });
 });
