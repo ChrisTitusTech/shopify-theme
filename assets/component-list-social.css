@@ -10,6 +10,11 @@
   }
 }
 
+.list-social__item {
+  padding-left: 0;
+  list-style: none;
+}
+
 .list-social__item .icon {
   height: 2.2rem;
   width: 2.2rem;
