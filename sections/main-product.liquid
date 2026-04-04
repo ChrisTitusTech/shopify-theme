@@ -582,10 +582,12 @@
                                 {% endif %}
                               >
                                 <ul class="list-unstyled" role="list">
+                                  {%- # theme-check-disable UndefinedObject -%}
                                   {%- for product in recommendations.products
                                     limit: block.settings.products_per_page
                                     offset: continue
                                   -%}
+                                  {%- # theme-check-enable UndefinedObject -%}
                                     <li>
                                       {%- if block.settings.enable_quick_add -%}
                                         {% assign quick_add = 'standard' %}

@@ -58,6 +58,7 @@
       {{ body_font_bold_italic | font_face: font_display: 'swap' }}
       {{ settings.type_header_font | font_face: font_display: 'swap' }}
 
+      {%- assign scheme_classes = '' -%}
       {% for scheme in settings.color_schemes -%}
         {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
         {% if forloop.index == 1 -%}
@@ -302,6 +303,7 @@
     </script>
 
     <!-- ChrisTitus.com theme: Font Awesome 6 Free -->
+    {%- # theme-check-disable RemoteAsset -%}
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -309,6 +311,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     >
+    {%- # theme-check-enable RemoteAsset -%}
 
     <!-- ChrisTitus.com theme: override styles (loaded last to win cascade) -->
     {{ 'christitus-overrides.css' | asset_url | stylesheet_tag }}
