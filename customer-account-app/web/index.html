@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CTT Downloads — Diagnostics</title>
+  <!-- App Bridge 3.x: auto-initialises from the URL params Shopify injects -->
+  <script src="https://cdn.shopify.com/shopifycloud/app-bridge.js"
+          data-api-key="__CLIENT_ID__"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f6f6f7;
+      color: #1a1a1a;
+      padding: 24px;
+    }
+    h1 { font-size: 1.4rem; margin-bottom: 4px; }
+    .subtitle { color: #6d7175; font-size: 0.875rem; margin-bottom: 24px; }
+    .card {
+      background: #fff;
+      border: 1px solid #e1e3e5;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .card h2 { font-size: 1rem; margin-bottom: 12px; }
+    .row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .badge.ok  { background: #d4edda; color: #1c6433; }
+    .badge.warn { background: #fff3cd; color: #856404; }
+    .badge.info { background: #d1ecf1; color: #0c5460; }
+    label { font-weight: 600; font-size: 0.875rem; min-width: 200px; }
+    .detail { font-size: 0.875rem; color: #4a4a4a; }
+    code {
+      background: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    ul { padding-left: 20px; }
+    li { font-size: 0.875rem; margin-bottom: 6px; }
+    a { color: #2c6ecb; }
+    .steps { counter-reset: step; }
+    .steps li { counter-increment: step; }
+    .steps li::marker { content: counter(step) ". "; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <h1>CTT Downloads — Admin Diagnostics</h1>
+  <p class="subtitle">ctt-downloads · Customer Account UI Extension</p>
+
+  <!-- Extension Info -->
+  <div class="card">
+    <h2>Extension</h2>
+    <div class="row">
+      <label>Name</label>
+      <span class="detail">Order Downloads</span>
+    </div>
+    <div class="row">
+      <label>Handle</label>
+      <code>order-downloads</code>
+    </div>
+    <div class="row">
+      <label>Target</label>
+      <code>customer-account.order-status.cart-line-list.render-after</code>
+    </div>
+    <div class="row">
+      <label>Renders on</label>
+      <span class="detail">New Customer Accounts — Order Detail page (after line items)</span>
+    </div>
+    <div class="row">
+      <label>Visible when</label>
+      <span class="detail">At least one line item has a non-empty <code>custom.url</code> metafield</span>
+    </div>
+  </div>
+
+  <!-- Metafield Requirements -->
+  <div class="card">
+    <h2>Metafield Setup Checklist</h2>
+    <ol class="steps">
+      <li>
+        <strong>Metafield exists:</strong> Products → Custom data →
+        namespace <code>custom</code>, key <code>url</code>, type <code>list.url</code>
+      </li>
+      <li>
+        <strong>Customer Account API access enabled:</strong><br />
+        Shopify Admin → Settings → Custom data → Products → <code>custom.url</code> →
+        Edit → enable <em>"Customer Account API"</em> read access.<br />
+        <span style="color:#856404">⚠ Without this the GraphQL query returns null and no download buttons appear.</span>
+      </li>
+      <li>
+        <strong>Product has a value:</strong> Open any product, scroll to Metafields,
+        confirm <code>custom.url</code> has at least one URL entry.
+      </li>
+    </ol>
+  </div>
+
+  <!-- GraphQL Query Reference -->
+  <div class="card">
+    <h2>GraphQL Query (Customer Account API)</h2>
+    <p style="font-size:0.875rem;margin-bottom:10px;">
+      The extension runs this query client-side after the order loads:
+    </p>
+    <pre style="background:#f0f0f0;padding:14px;border-radius:6px;font-size:0.8rem;overflow-x:auto;">query OrderDownloads($orderId: ID!) {
+  order(id: $orderId) {
+    lineItems(first: 50) {
+      nodes {
+        title
+        product {
+          metafield(namespace: "custom", key: "url") {
+            value
+          }
+        }
+      }
+    }
+  }
+}</pre>
+    <p style="font-size:0.8rem;margin-top:8px;color:#6d7175;">
+      Returns JSON-encoded <code>list.url</code> array; the extension takes the last entry.
+    </p>
+  </div>
+
+  <!-- Quick Links -->
+  <div class="card">
+    <h2>Quick Links</h2>
+    <ul>
+      <li><a href="/admin/settings/customer_accounts" target="_top">Customer accounts settings</a></li>
+      <li><a href="/admin/settings/custom_data" target="_top">Custom data (metafields)</a></li>
+      <li><a href="/admin/apps" target="_top">Installed apps</a></li>
+      <li>
+        <a href="https://github.com/ChrisTitusTech/shopify-theme/tree/main/customer-account-app"
+           target="_blank" rel="noopener">
+          GitHub — customer-account-app source
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Deploy Info -->
+  <div class="card">
+    <h2>Deployment</h2>
+    <div class="row">
+      <label>Dev server</label>
+      <span class="detail"><code>cd customer-account-app &amp;&amp; shopify app dev</code></span>
+    </div>
+    <div class="row">
+      <label>Deploy extension</label>
+      <span class="detail"><code>shopify app deploy</code></span>
+    </div>
+    <div class="row">
+      <label>Push theme</label>
+      <span class="detail"><code>shopify theme push --theme &lt;id&gt;</code></span>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -23,3 +23,7 @@ redirect_urls = [ ]
 
 [pos]
 embedded = false
+
+[web]
+  [web.commands]
+    dev = "node server.js"

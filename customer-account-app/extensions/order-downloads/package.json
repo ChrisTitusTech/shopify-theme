@@ -2,10 +2,18 @@
   "name": "order-downloads",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
   "dependencies": {
     "@shopify/ui-extensions": "^2025.1.0",
     "@shopify/ui-extensions-react": "^2025.1.0",
     "react": "^18.3.1",
     "react-reconciler": "^0.27.0"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.0"
   }
 }

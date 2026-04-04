@@ -10,6 +10,7 @@ import {
   Heading,
   Divider,
 } from '@shopify/ui-extensions-react/customer-account';
+import { extractDownloads } from './utils.js';
 
 const TARGET = 'customer-account.order-status.cart-line-list.render-after';
 
@@ -51,23 +52,7 @@ function OrderDownloadBlock() {
       try {
         const { data } = await query(QUERY, { variables: { orderId: order.id } });
         const nodes = data?.order?.lineItems?.nodes ?? [];
-
-        const parsed = nodes.flatMap((item) => {
-          const raw = item.product?.metafield?.value;
-          if (!raw) return [];
-          try {
-            // Metafield type is list.url — stored as a JSON array.
-            // Take the last entry, matching Liquid's `| last` behaviour.
-            const urls = JSON.parse(raw);
-            const latest = Array.isArray(urls) ? urls[urls.length - 1] : urls;
-            if (!latest) return [];
-            return [{ title: item.title, url: latest }];
-          } catch {
-            return [];
-          }
-        });
-
-        setDownloads(parsed);
+        setDownloads(extractDownloads(nodes));
       } catch {
         // Silently — block stays hidden on error
       }
