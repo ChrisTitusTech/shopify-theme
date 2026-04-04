@@ -1,6 +1,10 @@
 <!doctype html>
-<html class="js" lang="{{ request.locale.iso_code }}">
+<html class="js" lang="{{ request.locale.iso_code }}" data-theme="dark">
   <head>
+    <!-- ChrisTitus.com theme: apply saved theme immediately to prevent flash of wrong theme -->
+    <script>
+      (function(){var t=localStorage.getItem('ctt-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})();
+    </script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -308,6 +312,7 @@
 
     <!-- ChrisTitus.com theme: override styles (loaded last to win cascade) -->
     {{ 'christitus-overrides.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'theme-toggle.js' | asset_url }}" defer="defer"></script>
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
