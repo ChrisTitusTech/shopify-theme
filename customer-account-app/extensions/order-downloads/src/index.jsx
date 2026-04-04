@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import {
   reactExtension,
   useApi,
+  useOrder,
   BlockStack,
   InlineStack,
   Button,
@@ -10,17 +11,17 @@ import {
   Divider,
 } from '@shopify/ui-extensions-react/customer-account';
 
-// Registered on the order detail page in New Customer Accounts.
-// Shopify injects this block below the order summary for every order.
-export default reactExtension(
-  'customer-account.order.block.render',
-  () => <OrderDownloadBlock />,
-);
+const TARGET = 'customer-account.order-status.cart-line-list.render-after';
+
+// Renders after the line-item list on the order status / order detail page
+// in New Customer Accounts. Shows download buttons for products with a URL
+// stored in the custom.url metafield.
+export default reactExtension(TARGET, () => <OrderDownloadBlock />);
 
 // GraphQL query against the Customer Account API.
-// Requires the product metafield definition (namespace: custom, key: url)
-// to have "Customer Account API" access enabled in Shopify Admin:
-//   Settings → Custom data → Products → custom.url → Edit → enable access.
+// Requires the product metafield (namespace: custom, key: url) to have
+// "Customer Account API" access enabled:
+//   Shopify Admin → Settings → Custom data → Products → custom.url → Edit → enable access.
 const QUERY = `
   query OrderDownloads($orderId: ID!) {
     order(id: $orderId) {
@@ -39,10 +40,13 @@ const QUERY = `
 `;
 
 function OrderDownloadBlock() {
-  const { query, order } = useApi('customer-account.order.block.render');
+  const { query } = useApi(TARGET);
+  // useOrder() subscribes to the order subscribable from OrderStatusApi
+  const order = useOrder();
   const [downloads, setDownloads] = useState([]);
 
   useEffect(() => {
+    if (!order?.id) return;
     (async () => {
       try {
         const { data } = await query(QUERY, { variables: { orderId: order.id } });
@@ -65,10 +69,10 @@ function OrderDownloadBlock() {
 
         setDownloads(parsed);
       } catch {
-        // Silently swallow errors — block simply stays hidden
+        // Silently — block stays hidden on error
       }
     })();
-  }, [order.id, query]);
+  }, [order?.id, query]);
 
   // Render nothing if this order has no downloadable products
   if (downloads.length === 0) return null;

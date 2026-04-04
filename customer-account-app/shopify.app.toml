@@ -1,21 +1,25 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "fa9c876462a449fb62474d3f53a0979b"
 name = "ctt-downloads"
-client_id = "041a5afd9341e785540b5e59353c230d"
-application_url = "https://projects.christitus.com"
-embedded = false
+application_url = "https://cttstore.com"
+embedded = true
 
 [build]
 automatically_update_urls_on_dev = true
 dev_store_url = "cttstore.com"
 
+[webhooks]
+api_version = "2026-04"
+
 [access_scopes]
-# No store-side scopes needed — extension only reads Customer Account API
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
 scopes = ""
+optional_scopes = [ ]
+use_legacy_install_flow = false
 
 [auth]
-redirect_urls = ["https://projects.christitus.com/callback"]
-
-[webhooks]
-api_version = "2025-01"
+redirect_urls = [ ]
 
 [pos]
 embedded = false

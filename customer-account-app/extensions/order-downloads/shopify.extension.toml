@@ -1,4 +1,4 @@
-api_version = "2025-01"
+api_version = "2026-04"
 uid = "7f8657b7-b730-3379-790f-e3e8b236b6e46838c67e"
 
 [[extensions]]
@@ -8,4 +8,4 @@ handle = "order-downloads"
 
 [[extensions.targeting]]
 module = "./src/index.jsx"
-target = "customer-account.order.block.render"
+target = "customer-account.order-status.cart-line-list.render-after"
