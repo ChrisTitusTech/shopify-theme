@@ -128,7 +128,10 @@
         "maximum_of": "Največ od {{ quantity }}",
         "multiples_of": "V korakih po {{ quantity }}",
         "in_cart_html": "<span class=\"quantity-cart\">{{ quantity }}</span> v košarici",
-        "note": "Prikaži pravila glede količine"
+        "note": "Prikaži pravila glede količine",
+        "min_of": "Min {{ quantity }}",
+        "max_of": "Max {{ quantity }}",
+        "in_cart_aria_label": "Quantity ({{ quantity }} in cart)"
       },
       "price": {
         "from_price_html": "Od {{ price }}",
@@ -156,7 +159,6 @@
         "image_available": "Slika {{ index }} je zdaj na voljo v pogledu galerije"
       },
       "view_full_details": "Prikaži vse podrobnosti",
-      "include_taxes": "Vključno z davkom.",
       "shipping_policy_html": "<a href=\"{{ link }}\">Dostava</a> se obračuna ob zaključku nakupa.",
       "choose_options": "Izberite možnosti",
       "choose_product_options": "Izberite možnosti za izdelek {{ product_name }}",
@@ -173,9 +175,13 @@
         "title": "Količinski popust",
         "note": "Na voljo je količinski popust",
         "minimum": "{{ quantity }} in več",
-        "price_at_each": "po ceni {{ price }}/kos",
-        "price_range": "{{ minimum }}–{{ maximum }}"
-      }
+        "price_range": "{{ minimum }}–{{ maximum }}",
+        "price_at_each_html": "at {{ price }}/ea"
+      },
+      "nested_label": "{{ title }} for {{ parent_title }}",
+      "taxes_included": "Taxes included.",
+      "duties_included": "Duties included.",
+      "duties_and_taxes_included": "Duties and taxes included."
     },
     "modal": {
       "label": "Galerija predstavnostnih vsebin"
@@ -298,10 +304,6 @@
       "empty": "Vaša košarica je prazna",
       "cart_error": "Pri posodabljanju vaše košarice je prišlo do napake. Poskusite znova.",
       "cart_quantity_error_html": "V košarico lahko dodate največ toliko tovrstnih izdelkov: {{ quantity }}.",
-      "taxes_and_shipping_policy_at_checkout_html": "Davki, popusti in <a href=\"{{ link }}\">strošek dostave</a> se obračunajo ob zaključku nakupa",
-      "taxes_included_but_shipping_at_checkout": "Vključeni davek ter strošek dostave in popusti se obračunajo ob zaključku nakupa",
-      "taxes_included_and_shipping_policy_html": "Davek vključen. <a href=\"{{ link }}\">Strošek dostave</a> in popusti se obračunajo ob zaključku nakupa.",
-      "taxes_and_shipping_at_checkout": "Davki, popusti in strošek dostave se obračunajo ob zaključku nakupa",
       "update": "Posodobitev",
       "headings": {
         "product": "Izdelek",
@@ -315,7 +317,15 @@
         "paragraph_html": "Za hitrejši zaključek nakupa <a href=\"{{ link }}\" class=\"link underlined-link\">se prijavite</a>."
       },
       "estimated_total": "Predvideni skupni znesek",
-      "new_estimated_total": "Nov predvideni skupni znesek"
+      "new_estimated_total": "Nov predvideni skupni znesek",
+      "duties_and_taxes_included_shipping_at_checkout_with_policy_html": "Duties and taxes included. Discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "duties_and_taxes_included_shipping_at_checkout_without_policy": "Duties and taxes included. Discounts and shipping calculated at checkout.",
+      "taxes_included_shipping_at_checkout_with_policy_html": "Taxes included. Discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "taxes_included_shipping_at_checkout_without_policy": "Taxes included. Discounts and shipping calculated at checkout.",
+      "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html": "Duties included. Taxes, discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy": "Duties included. Taxes, discounts and shipping calculated at checkout.",
+      "taxes_at_checkout_shipping_at_checkout_with_policy_html": "Taxes, discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "taxes_at_checkout_shipping_at_checkout_without_policy": "Taxes, discounts and shipping calculated at checkout."
     },
     "footer": {
       "payment": "Načini plačila"
@@ -383,7 +393,10 @@
       "remove_all_items_confirmation": "Ali želite iz košarice odstraniti vse izdelke ({{ quantity }})?",
       "remove_all": "Odstrani vse",
       "cancel": "Prekliči",
-      "remove_all_single_item_confirmation": "Ali želite iz košarice odstraniti 1 izdelek?"
+      "remove_all_single_item_confirmation": "Ali želite iz košarice odstraniti 1 izdelek?",
+      "min_error": "This item has a minimum of {{ min }}",
+      "max_error": "This item has a maximum of {{ max }}",
+      "step_error": "You can only add this item in increments of {{ step }}"
     }
   },
   "localization": {
@@ -446,7 +459,8 @@
       "password": "Geslo",
       "title": "Prijava",
       "sign_in": "Vpis",
-      "submit": "Pošlji"
+      "submit": "Pošlji",
+      "alternate_provider_separator": "or"
     },
     "order": {
       "title": "Naročilo {{ name }}",

@@ -128,7 +128,10 @@
         "maximum_of": "Daugiausiai {{ quantity }}",
         "multiples_of": "Kiekis didėja kas {{ quantity }}",
         "in_cart_html": "<span class=\"quantity-cart\">{{ quantity }}</span> vnt. krepšelyje",
-        "note": "Peržiūrėti kiekių taisykles"
+        "note": "Peržiūrėti kiekių taisykles",
+        "min_of": "Min {{ quantity }}",
+        "max_of": "Max {{ quantity }}",
+        "in_cart_aria_label": "Quantity ({{ quantity }} in cart)"
       },
       "price": {
         "from_price_html": "Nuo {{ price }}",
@@ -156,7 +159,6 @@
         "image_available": "Vaizdas {{ index }} dabar prieinamas galerijos rodinyje"
       },
       "view_full_details": "Žiūrėti visą informaciją",
-      "include_taxes": "Mokesčiai įtraukti.",
       "shipping_policy_html": "<a href=\"{{ link }}\">Siuntimo išlaidos</a> apskaičiuojamos atsiskaitant.",
       "choose_options": "Rinktis variantus",
       "choose_product_options": "Rinktis {{ product_name }} variantus",
@@ -173,9 +175,13 @@
         "title": "Kiekybinė kainodara",
         "note": "Galima kiekybinė kainodara",
         "minimum": "{{ quantity }}+",
-        "price_at_each": "po {{ price }}/vnt.",
-        "price_range": "{{ minimum }}–{{ maximum }}"
-      }
+        "price_range": "{{ minimum }}–{{ maximum }}",
+        "price_at_each_html": "at {{ price }}/ea"
+      },
+      "nested_label": "{{ title }} for {{ parent_title }}",
+      "taxes_included": "Taxes included.",
+      "duties_included": "Duties included.",
+      "duties_and_taxes_included": "Duties and taxes included."
     },
     "modal": {
       "label": "Medijų galerija"
@@ -298,10 +304,6 @@
       "empty": "Jūsų krepšelis tuščias",
       "cart_error": "Atnaujinant krepšelį įvyko klaida. Bandykite dar kartą.",
       "cart_quantity_error_html": "Į krepšelį galite įdėti tik {{ quantity }}šios prekės vnt.",
-      "taxes_and_shipping_policy_at_checkout_html": "Mokesčiai, nuolaidos ir <a href=\"{{ link }}\">siuntimo išlaidos</a> apskaičiuojami atsiskaitant",
-      "taxes_included_but_shipping_at_checkout": "Mokesčiai įtraukti, o siuntimo išlaidos ir nuolaidos apskaičiuojamos atsiskaitant",
-      "taxes_included_and_shipping_policy_html": "Mokesčiai įtraukti. <a href=\"{{ link }}\">Siuntimo išlaidos</a> ir nuolaidos apskaičiuojamos atsiskaitant.",
-      "taxes_and_shipping_at_checkout": "Mokesčiai, nuolaidos ir siuntimo išlaidos apskaičiuojami atsiskaitant",
       "update": "Atnaujinti",
       "headings": {
         "product": "Gaminys",
@@ -315,7 +317,15 @@
         "paragraph_html": "<a href=\"{{ link }}\" class=\"link underlined-link\">Prisijunkite</a> ir atsiskaitysite greičiau."
       },
       "estimated_total": "Apskaičiuota bendra suma",
-      "new_estimated_total": "Nauja apskaičiuota bendra suma"
+      "new_estimated_total": "Nauja apskaičiuota bendra suma",
+      "duties_and_taxes_included_shipping_at_checkout_with_policy_html": "Duties and taxes included. Discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "duties_and_taxes_included_shipping_at_checkout_without_policy": "Duties and taxes included. Discounts and shipping calculated at checkout.",
+      "taxes_included_shipping_at_checkout_with_policy_html": "Taxes included. Discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "taxes_included_shipping_at_checkout_without_policy": "Taxes included. Discounts and shipping calculated at checkout.",
+      "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html": "Duties included. Taxes, discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy": "Duties included. Taxes, discounts and shipping calculated at checkout.",
+      "taxes_at_checkout_shipping_at_checkout_with_policy_html": "Taxes, discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "taxes_at_checkout_shipping_at_checkout_without_policy": "Taxes, discounts and shipping calculated at checkout."
     },
     "footer": {
       "payment": "Mokėjimo būdai"
@@ -383,7 +393,10 @@
       "remove_all_items_confirmation": "Pašalinti visas {{ quantity }} prekes (-ių) iš krepšelio?",
       "remove_all": "Pašalinti viską",
       "cancel": "Atšaukti",
-      "remove_all_single_item_confirmation": "Pašalinti 1 prekę iš krepšelio?"
+      "remove_all_single_item_confirmation": "Pašalinti 1 prekę iš krepšelio?",
+      "min_error": "This item has a minimum of {{ min }}",
+      "max_error": "This item has a maximum of {{ max }}",
+      "step_error": "You can only add this item in increments of {{ step }}"
     }
   },
   "localization": {
@@ -446,7 +459,8 @@
       "password": "Slaptažodis",
       "title": "Prisijungimo vardas",
       "sign_in": "Prisijungti",
-      "submit": "Pateikti"
+      "submit": "Pateikti",
+      "alternate_provider_separator": "or"
     },
     "order": {
       "title": "Užsakymas {{ name }}",

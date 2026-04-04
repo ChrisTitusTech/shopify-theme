@@ -127,7 +127,10 @@
         "maximum_of": "Maximum {{ quantity }}",
         "multiples_of": "Incrementuri de {{ quantity }}",
         "in_cart_html": "<span class=\"quantity-cart\">{{ quantity }}</span> în coș",
-        "note": "Vezi regulile legate de cantitate"
+        "note": "Vezi regulile legate de cantitate",
+        "min_of": "Min {{ quantity }}",
+        "max_of": "Max {{ quantity }}",
+        "in_cart_aria_label": "Quantity ({{ quantity }} in cart)"
       },
       "price": {
         "from_price_html": "Începând cu {{ price }}",
@@ -155,7 +158,6 @@
         "image_available": "Imaginea {{ index }} este disponibilă acum în vizualizarea galeriei"
       },
       "view_full_details": "Vedeți detaliile complete",
-      "include_taxes": "Taxe incluse.",
       "shipping_policy_html": "<a href=\"{{ link }}\">Taxele de expediere</a> sunt calculate la finalizarea comenzii.",
       "choose_options": "Alege opțiunile",
       "choose_product_options": "Alege opțiunile pentru {{ product_name }}",
@@ -172,9 +174,13 @@
         "title": "Stabilire preț per volum",
         "note": "Stabilirea prețului per volum este disponibilă",
         "minimum": "Peste {{ quantity }}",
-        "price_at_each": "la {{ price }}/buc.",
-        "price_range": "{{ minimum }} - {{ maximum }}"
-      }
+        "price_range": "{{ minimum }} - {{ maximum }}",
+        "price_at_each_html": "at {{ price }}/ea"
+      },
+      "nested_label": "{{ title }} for {{ parent_title }}",
+      "taxes_included": "Taxes included.",
+      "duties_included": "Duties included.",
+      "duties_and_taxes_included": "Duties and taxes included."
     },
     "modal": {
       "label": "Galerie media"
@@ -288,10 +294,6 @@
       "empty": "Coșul dvs. este gol",
       "cart_error": "A apărut o eroare în timpul actualizării coșului. Încercați din nou.",
       "cart_quantity_error_html": "Cantitatea maximă pe care o poți adăuga în coș din acest articol: {{ quantity }}.",
-      "taxes_and_shipping_policy_at_checkout_html": "Taxele, reducerile și <a href=\"{{ link }}\">transportul</a> sunt calculate la finalizarea comenzii",
-      "taxes_included_but_shipping_at_checkout": "Taxele sunt incluse, iar transportul și reducerile sunt calculate la finalizarea comenzii",
-      "taxes_included_and_shipping_policy_html": "Taxele sunt incluse. <a href=\"{{ link }}\">Transportul</a> și reducerile sunt calculate la finalizarea comenzii.",
-      "taxes_and_shipping_at_checkout": "Taxele, reducerile și transportul sunt calculate la finalizarea comenzii",
       "update": "Actualizați",
       "headings": {
         "product": "Produs",
@@ -305,7 +307,15 @@
         "paragraph_html": "<a href=\"{{ link }}\" class=\"link underlined-link\">Conectează-te</a> pentru a finaliza comanda mai rapid."
       },
       "estimated_total": "Total estimat",
-      "new_estimated_total": "Noul total estimat"
+      "new_estimated_total": "Noul total estimat",
+      "duties_and_taxes_included_shipping_at_checkout_with_policy_html": "Duties and taxes included. Discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "duties_and_taxes_included_shipping_at_checkout_without_policy": "Duties and taxes included. Discounts and shipping calculated at checkout.",
+      "taxes_included_shipping_at_checkout_with_policy_html": "Taxes included. Discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "taxes_included_shipping_at_checkout_without_policy": "Taxes included. Discounts and shipping calculated at checkout.",
+      "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html": "Duties included. Taxes, discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy": "Duties included. Taxes, discounts and shipping calculated at checkout.",
+      "taxes_at_checkout_shipping_at_checkout_with_policy_html": "Taxes, discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "taxes_at_checkout_shipping_at_checkout_without_policy": "Taxes, discounts and shipping calculated at checkout."
     },
     "footer": {
       "payment": "Metode de plată"
@@ -371,7 +381,10 @@
       "remove_all_items_confirmation": "Elimini toate cele {{ quantity }} articole din coș?",
       "remove_all": "Elimină tot",
       "cancel": "Anulează",
-      "remove_all_single_item_confirmation": "Elimini 1 articol din coș?"
+      "remove_all_single_item_confirmation": "Elimini 1 articol din coș?",
+      "min_error": "This item has a minimum of {{ min }}",
+      "max_error": "This item has a maximum of {{ max }}",
+      "step_error": "You can only add this item in increments of {{ step }}"
     }
   },
   "localization": {
@@ -434,7 +447,8 @@
       "password": "Parolă",
       "title": "Conectați-vă",
       "sign_in": "Conectați-vă",
-      "submit": "Trimiteți"
+      "submit": "Trimiteți",
+      "alternate_provider_separator": "or"
     },
     "orders": {
       "title": "Istoric comenzi",

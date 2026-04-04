@@ -118,7 +118,10 @@
         "maximum_of": "Максимум: {{ quantity }}",
         "multiples_of": "Стъпки от {{ quantity }}",
         "in_cart_html": "<span class=\"quantity-cart\">{{ quantity }}</span> в количката",
-        "note": "Преглед на правилата за количества"
+        "note": "Преглед на правилата за количества",
+        "min_of": "Min {{ quantity }}",
+        "max_of": "Max {{ quantity }}",
+        "in_cart_aria_label": "Quantity ({{ quantity }} in cart)"
       },
       "price": {
         "from_price_html": "От {{ price }}",
@@ -153,7 +156,6 @@
         "image_available": "Изображение {{ index }} вече е налично във визуализатора на галерията"
       },
       "view_full_details": "Покажи пълните подробности",
-      "include_taxes": "С включени данъци.",
       "shipping_policy_html": "<a href=\"{{ link }}\">Доставката</a> се изчислява при плащане.",
       "choose_options": "Изберете опции",
       "choose_product_options": "Изберете опции за {{ product_name }}",
@@ -170,10 +172,14 @@
         "title": "Цени на едро",
         "note": "Има възможност за цени на едро",
         "minimum": "{{ quantity }}+",
-        "price_at_each": "при {{ price }}/бр.",
-        "price_range": "{{ minimum }} – {{ maximum }}"
+        "price_range": "{{ minimum }} – {{ maximum }}",
+        "price_at_each_html": "at {{ price }}/ea"
       },
-      "product_variants": "Варианти на продукта"
+      "product_variants": "Варианти на продукта",
+      "nested_label": "{{ title }} for {{ parent_title }}",
+      "taxes_included": "Taxes included.",
+      "duties_included": "Duties included.",
+      "duties_and_taxes_included": "Duties and taxes included."
     },
     "modal": {
       "label": "Мултимедийна галерия"
@@ -277,10 +283,6 @@
       "empty": "Количката ви е празна.",
       "cart_error": "При актуализирането на количката ви възникна грешка. Опитайте отново.",
       "cart_quantity_error_html": "Можете да добавите само {{ quantity }} броя от този артикул в количката си.",
-      "taxes_and_shipping_policy_at_checkout_html": "Данъците, отстъпките и <a href=\"{{ link }}\">доставката</a> се изчисляват при плащане",
-      "taxes_included_but_shipping_at_checkout": "Данъците са включени, а доставката и отстъпките се изчисляват при плащане",
-      "taxes_included_and_shipping_policy_html": "С включени данъци. <a href=\"{{ link }}\">Доставката</a> и отстъпките се изчисляват при плащане.",
-      "taxes_and_shipping_at_checkout": "Данъците, отстъпките и доставката се изчисляват при плащане",
       "headings": {
         "product": "Продукт",
         "price": "Цена",
@@ -295,7 +297,15 @@
         "paragraph_html": "<a href=\"{{ link }}\" class=\"link underlined-link\">Влезте</a> за по-бързо преминаване към плащане."
       },
       "estimated_total": "Очаквана обща сума",
-      "new_estimated_total": "Нова очаквана обща сума"
+      "new_estimated_total": "Нова очаквана обща сума",
+      "duties_and_taxes_included_shipping_at_checkout_with_policy_html": "Duties and taxes included. Discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "duties_and_taxes_included_shipping_at_checkout_without_policy": "Duties and taxes included. Discounts and shipping calculated at checkout.",
+      "taxes_included_shipping_at_checkout_with_policy_html": "Taxes included. Discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "taxes_included_shipping_at_checkout_without_policy": "Taxes included. Discounts and shipping calculated at checkout.",
+      "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html": "Duties included. Taxes, discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy": "Duties included. Taxes, discounts and shipping calculated at checkout.",
+      "taxes_at_checkout_shipping_at_checkout_with_policy_html": "Taxes, discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "taxes_at_checkout_shipping_at_checkout_without_policy": "Taxes, discounts and shipping calculated at checkout."
     },
     "footer": {
       "payment": "Начини на плащане"
@@ -359,7 +369,10 @@
       "remove_all_items_confirmation": "Премахване на всички {{ quantity }} артикула от количката?",
       "remove_all": "Премахване на всички",
       "cancel": "Отказ",
-      "remove_all_single_item_confirmation": "Премахване на 1 артикул от количката?"
+      "remove_all_single_item_confirmation": "Премахване на 1 артикул от количката?",
+      "min_error": "This item has a minimum of {{ min }}",
+      "max_error": "This item has a maximum of {{ max }}",
+      "step_error": "You can only add this item in increments of {{ step }}"
     }
   },
   "localization": {
@@ -416,7 +429,8 @@
       "title": "Влизане",
       "sign_in": "Влизане",
       "submit": "Изпрати",
-      "create_account": "Създаване на профил"
+      "create_account": "Създаване на профил",
+      "alternate_provider_separator": "or"
     },
     "orders": {
       "order_number": "Поръчка",
