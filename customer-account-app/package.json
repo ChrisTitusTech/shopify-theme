@@ -1,0 +1,13 @@
+{
+  "name": "ctt-downloads",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "shopify app dev",
+    "build": "shopify app build",
+    "deploy": "shopify app deploy"
+  },
+  "dependencies": {
+    "@shopify/cli": "^3.0.0"
+  }
+}

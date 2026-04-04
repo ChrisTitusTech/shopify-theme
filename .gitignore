@@ -1,0 +1,25 @@
+# Local planning/reference docs and VPS scripts — not part of the theme
+downloads.txt
+vps/
+
+# Node / npm
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp
+.pnp.js
+package-lock.json
+
+# Shopify CLI / app build artefacts
+.shopify/
+dist/
+build/
+.cache/
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,21 @@
+name = "ctt-downloads"
+client_id = "041a5afd9341e785540b5e59353c230d"
+application_url = "https://projects.christitus.com"
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "cttstore.com"
+
+[access_scopes]
+# No store-side scopes needed — extension only reads Customer Account API
+scopes = ""
+
+[auth]
+redirect_urls = ["https://projects.christitus.com/callback"]
+
+[webhooks]
+api_version = "2025-01"
+
+[pos]
+embedded = false
