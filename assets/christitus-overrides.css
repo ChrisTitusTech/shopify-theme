@@ -667,6 +667,25 @@ nav[aria-label="Breadcrumb"] a:hover {
    16. MISC / UTILITY
    ----------------------------------------------------------------------------- */
 
+/* Increase mobile side padding so content doesn't touch screen edges */
+.page-width {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+@media screen and (min-width: 750px) {
+  .page-width {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+}
+
+/* Add breathing room above/below caption labels */
+.caption-with-letter-spacing {
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+}
+
 *:focus-visible {
   outline: 2px solid var(--ctt-accent) !important;
   outline-offset: 3px;
