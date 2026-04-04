@@ -26,6 +26,49 @@
   </div>
 
   <div>
+    {%- assign has_any_downloads = false -%}
+    {%- for order in customer.orders -%}
+      {%- for line_item in order.line_items -%}
+        {%- if line_item.product.metafields.custom.url | last != blank -%}
+          {%- assign has_any_downloads = true -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
+    {%- if has_any_downloads -%}
+      <div class="customer__downloads">
+        <h2>Your Downloads</h2>
+        <table role="table" class="order-history">
+          <thead role="rowgroup">
+            <tr role="row">
+              <th scope="col" role="columnheader">Product</th>
+              <th scope="col" role="columnheader">Order</th>
+              <th scope="col" role="columnheader">Date</th>
+              <th scope="col" role="columnheader">Download</th>
+            </tr>
+          </thead>
+          <tbody role="rowgroup">
+            {%- for order in customer.orders -%}
+              {%- for line_item in order.line_items -%}
+                {%- assign current_download_url = line_item.product.metafields.custom.url | last -%}
+                {%- if current_download_url != blank -%}
+                  <tr role="row">
+                    <td role="cell">{{ line_item.title | escape }}</td>
+                    <td role="cell">{{ order.name }}</td>
+                    <td role="cell">{{ order.created_at | time_tag: format: 'date' }}</td>
+                    <td role="cell">
+                      <a href="{{ current_download_url }}">
+                        <button class="btn" style="padding: 2px 20px;">Download</button>
+                      </a>
+                    </td>
+                  </tr>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+    {%- endif -%}
+
     <div>
       <h2>{{ 'customer.orders.title' | t }}</h2>
 
