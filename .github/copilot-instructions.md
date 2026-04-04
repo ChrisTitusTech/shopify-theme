@@ -6,6 +6,12 @@ This is a custom Shopify theme based on Dawn (v15.4.1), built for cttstore.com.
 It uses **Shopify CLI 3.x** (`shopify` command) as the primary development and deployment tool.
 There is no Node/npm build step — all files are served directly to Shopify.
 
+### CSS Based on christitus.com
+
+The CSS is adapted from the main [christitus.com](https://christitus.com) site, with modifications to fit the Shopify theme structure and support dark mode. The main custom CSS file is `assets/christitus-overrides.css`, which contains all site-specific style overrides. This file is included in the theme's global `<head>` via `layout/theme.liquid`.
+
+Refrence the original CSS from christitus.com at /home/titus/github/website or if no directory exists, the github repo is located at https://github.com/ChrisTitusTech/website. The CSS is organized into sections for typography, layout, dark mode, and component styles. It includes custom properties (CSS variables) for colors and fonts, which are used throughout the theme for consistent styling.
+
 ---
 
 ## Toolchain
