@@ -1,0 +1,61 @@
+name: Release Theme
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate version
+        id: version
+        run: |
+          VERSION=$(date -u +'%y-%m-%d')
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "tag=v${VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Update theme version in settings_schema.json
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          jq --arg v "$VERSION" '.[0].theme_version = $v' config/settings_schema.json > tmp.json
+          mv tmp.json config/settings_schema.json
+
+      - name: Commit and tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add config/settings_schema.json
+          git commit -m "chore: bump version to ${{ steps.version.outputs.version }}"
+          git tag "${{ steps.version.outputs.tag }}"
+          git push origin main --follow-tags
+
+      - name: Package theme
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          ZIP_NAME="titus-dawn-${VERSION}.zip"
+          zip -r "${ZIP_NAME}" \
+            assets/ \
+            config/ \
+            layout/ \
+            locales/ \
+            sections/ \
+            snippets/ \
+            templates/
+          echo "zip_name=${ZIP_NAME}" >> "$GITHUB_OUTPUT"
+        id: package
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: "Titus Dawn ${{ steps.version.outputs.version }}"
+          files: ${{ steps.package.outputs.zip_name }}
