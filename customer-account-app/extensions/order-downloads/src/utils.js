@@ -2,28 +2,19 @@
  * Parse a single line item from the Customer Account API GraphQL response
  * into a download entry, or return null if the item has no download URL.
  *
- * The custom.url metafield is a list.url type stored as a JSON-encoded array.
- * We always take the last entry (most recently added URL), matching the
- * Liquid `| last` behaviour used in main-account.liquid.
+ * The download URL is injected as the `_download_url` line item property at
+ * add-to-cart time (via a hidden input in buy-buttons.liquid) and is stored
+ * on the order as a `customAttribute` entry.
  *
- * @param {{ title: string, product: { metafield: { value: string } | null } | null }} lineItem
+ * @param {{ title: string, customAttributes: Array<{ key: string, value: string }> | null }} lineItem
  * @returns {{ title: string, url: string } | null}
  */
 export function parseLineItemDownload(lineItem) {
-  const raw = lineItem?.product?.metafield?.value;
-  if (!raw) return null;
-
-  let urls;
-  try {
-    urls = JSON.parse(raw);
-  } catch {
-    return null;
-  }
-
-  const latest = Array.isArray(urls) ? urls[urls.length - 1] : urls;
-  if (!latest || typeof latest !== 'string' || latest.trim() === '') return null;
-
-  return { title: lineItem.title, url: latest };
+  const attrs = lineItem?.customAttributes;
+  const attr = Array.isArray(attrs) ? attrs.find((a) => a.key === '_download_url') : null;
+  const url = attr?.value;
+  if (!url || typeof url !== 'string' || url.trim() === '') return null;
+  return { title: lineItem.title, url };
 }
 
 /**

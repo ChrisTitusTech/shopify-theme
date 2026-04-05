@@ -6,52 +6,48 @@ import { parseLineItemDownload, extractDownloads } from '../src/utils.js';
 // ---------------------------------------------------------------------------
 
 describe('parseLineItemDownload', () => {
-  it('returns the last URL from a list.url JSON array', () => {
+  it('returns the URL from the _download_url customAttribute', () => {
     const item = {
       title: 'CTT Linux Course',
-      product: {
-        metafield: { value: '["https://example.com/v1.zip","https://example.com/v2.zip"]' },
-      },
+      customAttributes: [{ key: '_download_url', value: 'https://cdn.cttstore.com/linux.zip' }],
     };
     expect(parseLineItemDownload(item)).toEqual({
       title: 'CTT Linux Course',
-      url: 'https://example.com/v2.zip',
+      url: 'https://cdn.cttstore.com/linux.zip',
     });
   });
 
-  it('returns the only URL from a single-entry array', () => {
-    const item = {
-      title: 'Windows Toolbox',
-      product: {
-        metafield: { value: '["https://cdn.cttstore.com/toolbox.exe"]' },
-      },
-    };
-    expect(parseLineItemDownload(item)).toEqual({
-      title: 'Windows Toolbox',
-      url: 'https://cdn.cttstore.com/toolbox.exe',
-    });
-  });
-
-  it('handles a bare string value (non-array) gracefully', () => {
-    const item = {
-      title: 'Simple Product',
-      product: {
-        metafield: { value: '"https://example.com/file.zip"' },
-      },
-    };
-    expect(parseLineItemDownload(item)).toEqual({
-      title: 'Simple Product',
-      url: 'https://example.com/file.zip',
-    });
-  });
-
-  it('returns null when metafield is null', () => {
-    const item = { title: 'Physical Item', product: { metafield: null } };
+  it('returns null when customAttributes is an empty array', () => {
+    const item = { title: 'Physical Item', customAttributes: [] };
     expect(parseLineItemDownload(item)).toBeNull();
   });
 
-  it('returns null when product is null', () => {
-    const item = { title: 'No Product', product: null };
+  it('returns null when customAttributes has no _download_url key', () => {
+    const item = {
+      title: 'Gift Card',
+      customAttributes: [{ key: 'gift_note', value: 'Happy Birthday' }],
+    };
+    expect(parseLineItemDownload(item)).toBeNull();
+  });
+
+  it('returns null when _download_url value is an empty string', () => {
+    const item = {
+      title: 'Blank URL',
+      customAttributes: [{ key: '_download_url', value: '' }],
+    };
+    expect(parseLineItemDownload(item)).toBeNull();
+  });
+
+  it('returns null when _download_url value is only whitespace', () => {
+    const item = {
+      title: 'Whitespace URL',
+      customAttributes: [{ key: '_download_url', value: '   ' }],
+    };
+    expect(parseLineItemDownload(item)).toBeNull();
+  });
+
+  it('returns null when customAttributes is undefined', () => {
+    const item = { title: 'No Attrs' };
     expect(parseLineItemDownload(item)).toBeNull();
   });
 
@@ -59,36 +55,35 @@ describe('parseLineItemDownload', () => {
     expect(parseLineItemDownload(null)).toBeNull();
   });
 
-  it('returns null when JSON parse fails (malformed value)', () => {
-    const item = {
-      title: 'Bad Data',
-      product: { metafield: { value: 'not-json' } },
-    };
+  it('returns null when customAttributes is not an array (null)', () => {
+    const item = { title: 'Bad Data', customAttributes: null };
     expect(parseLineItemDownload(item)).toBeNull();
   });
 
-  it('returns null for an empty array', () => {
+  it('ignores other attributes and returns only the _download_url value', () => {
     const item = {
-      title: 'Empty URLs',
-      product: { metafield: { value: '[]' } },
+      title: 'Windows Toolbox',
+      customAttributes: [
+        { key: 'color', value: 'blue' },
+        { key: '_download_url', value: 'https://cdn.cttstore.com/toolbox.exe' },
+        { key: 'size', value: 'large' },
+      ],
     };
-    expect(parseLineItemDownload(item)).toBeNull();
+    expect(parseLineItemDownload(item)).toEqual({
+      title: 'Windows Toolbox',
+      url: 'https://cdn.cttstore.com/toolbox.exe',
+    });
   });
 
-  it('returns null when the last array entry is an empty string', () => {
+  it('returns the correct title from the line item', () => {
     const item = {
-      title: 'Blank URL',
-      product: { metafield: { value: '["https://example.com/old.zip",""]' } },
+      title: 'CTT Pro Bundle',
+      customAttributes: [{ key: '_download_url', value: 'https://cdn.cttstore.com/pro-bundle.zip' }],
     };
-    expect(parseLineItemDownload(item)).toBeNull();
-  });
-
-  it('returns null when metafield value is an empty string', () => {
-    const item = {
-      title: 'Empty Value',
-      product: { metafield: { value: '' } },
-    };
-    expect(parseLineItemDownload(item)).toBeNull();
+    expect(parseLineItemDownload(item)).toEqual({
+      title: 'CTT Pro Bundle',
+      url: 'https://cdn.cttstore.com/pro-bundle.zip',
+    });
   });
 });
 
@@ -99,15 +94,10 @@ describe('parseLineItemDownload', () => {
 describe('extractDownloads', () => {
   it('filters out items with no download, keeps items with one', () => {
     const lineItems = [
-      {
-        title: 'Physical T-Shirt',
-        product: { metafield: null },
-      },
+      { title: 'Physical T-Shirt', customAttributes: [] },
       {
         title: 'Linux Pro Course',
-        product: {
-          metafield: { value: '["https://cdn.cttstore.com/linux-pro.zip"]' },
-        },
+        customAttributes: [{ key: '_download_url', value: 'https://cdn.cttstore.com/linux-pro.zip' }],
       },
     ];
     expect(extractDownloads(lineItems)).toEqual([
@@ -119,23 +109,23 @@ describe('extractDownloads', () => {
     const lineItems = [
       {
         title: 'Course A',
-        product: { metafield: { value: '["https://cdn.cttstore.com/a.zip"]' } },
+        customAttributes: [{ key: '_download_url', value: 'https://cdn.cttstore.com/a.zip' }],
       },
       {
         title: 'Course B',
-        product: { metafield: { value: '["https://cdn.cttstore.com/b-v1.zip","https://cdn.cttstore.com/b-v2.zip"]' } },
+        customAttributes: [{ key: '_download_url', value: 'https://cdn.cttstore.com/b.zip' }],
       },
     ];
     expect(extractDownloads(lineItems)).toEqual([
       { title: 'Course A', url: 'https://cdn.cttstore.com/a.zip' },
-      { title: 'Course B', url: 'https://cdn.cttstore.com/b-v2.zip' },
+      { title: 'Course B', url: 'https://cdn.cttstore.com/b.zip' },
     ]);
   });
 
   it('returns an empty array when no items have downloads', () => {
     const lineItems = [
-      { title: 'Sticker Pack', product: { metafield: null } },
-      { title: 'Mug', product: null },
+      { title: 'Sticker Pack', customAttributes: [] },
+      { title: 'Mug', customAttributes: [{ key: 'engraving', value: 'Chris' }] },
     ];
     expect(extractDownloads(lineItems)).toEqual([]);
   });

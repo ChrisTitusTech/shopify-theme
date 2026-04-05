@@ -17,13 +17,12 @@ const TARGET = 'customer-account.order-index.block.render';
 // Accounts. Queries all orders for downloadable products and shows them in
 // one place so customers don't have to open each order to find downloads.
 //
-// Requires the product metafield (namespace: custom, key: url) to have
-// "Customer Account API" access enabled:
-//   Shopify Admin → Settings → Custom data → Products → custom.url → Edit
+// Download URLs are stored as the _download_url line item property, injected
+// at add-to-cart time via buy-buttons.liquid.
 export default reactExtension(TARGET, () => <DownloadsBlock />);
 
-// Query all orders for the current customer and pull the custom.url metafield
-// from each line item. 50 orders × 20 line items should cover all real cases.
+// Query all orders for the current customer and read the _download_url line
+// item property from each line item. 50 orders × 20 should cover all real cases.
 const QUERY = `
   query AllDownloads {
     customer {
@@ -33,10 +32,9 @@ const QUERY = `
           lineItems(first: 20) {
             nodes {
               title
-              product {
-                metafield(namespace: "custom", key: "url") {
-                  value
-                }
+              customAttributes {
+                key
+                value
               }
             }
           }

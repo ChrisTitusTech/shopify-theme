@@ -20,19 +20,17 @@ const TARGET = 'customer-account.order-status.cart-line-list.render-after';
 export default reactExtension(TARGET, () => <OrderDownloadBlock />);
 
 // GraphQL query against the Customer Account API.
-// Requires the product metafield (namespace: custom, key: url) to have
-// "Customer Account API" access enabled:
-//   Shopify Admin → Settings → Custom data → Products → custom.url → Edit → enable access.
+// The download URL is read from the _download_url line item property, which
+// is injected as a hidden input in buy-buttons.liquid at add-to-cart time.
 const QUERY = `
   query OrderDownloads($orderId: ID!) {
     order(id: $orderId) {
       lineItems(first: 50) {
         nodes {
           title
-          product {
-            metafield(namespace: "custom", key: "url") {
-              value
-            }
+          customAttributes {
+            key
+            value
           }
         }
       }

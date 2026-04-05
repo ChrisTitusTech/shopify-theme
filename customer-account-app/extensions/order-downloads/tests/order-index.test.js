@@ -14,11 +14,13 @@ describe('order-index.jsx — orders list downloads block', () => {
     expect(src).toContain('customer-account.order-index.block.render');
   });
 
-  it('queries customer.orders with lineItems and metafield', () => {
+  it('queries customer.orders with lineItems and customAttributes', () => {
     expect(src).toContain('customer {');
     expect(src).toContain('orders(first: 50)');
     expect(src).toContain('lineItems(first: 20)');
-    expect(src).toContain('metafield(namespace: "custom", key: "url")');
+    expect(src).toContain('customAttributes {');
+    expect(src).toContain('key');
+    expect(src).toContain('value');
   });
 
   it('imports extractDownloads from utils.js', () => {
