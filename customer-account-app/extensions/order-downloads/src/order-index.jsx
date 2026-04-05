@@ -17,7 +17,7 @@ const TARGET = 'customer-account.order-index.block.render';
 // Accounts. Queries all orders for downloadable products and shows them in
 // one place so customers don't have to open each order to find downloads.
 //
-// Download URLs are stored as the _download_url line item property, injected
+// Download URLs are stored as the download_url line item property, injected
 // at add-to-cart time via buy-buttons.liquid.
 export default reactExtension(TARGET, () => <DownloadsBlock />);
 

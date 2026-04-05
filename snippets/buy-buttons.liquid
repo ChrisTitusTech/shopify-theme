@@ -59,7 +59,7 @@
         {%- if product.metafields.custom.url != blank -%}
           <input
             type="hidden"
-            name="properties[_download_url]"
+            name="properties[download_url]"
             value="{{ product.metafields.custom.url | last }}"
           >
         {%- endif -%}

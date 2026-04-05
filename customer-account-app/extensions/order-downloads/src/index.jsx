@@ -20,7 +20,7 @@ const TARGET = 'customer-account.order-status.cart-line-list.render-after';
 export default reactExtension(TARGET, () => <OrderDownloadBlock />);
 
 // GraphQL query against the Customer Account API.
-// The download URL is read from the _download_url line item property, which
+// The download URL is read from the download_url line item property, which
 // is injected as a hidden input in buy-buttons.liquid at add-to-cart time.
 const QUERY = `
   query OrderDownloads($orderId: ID!) {

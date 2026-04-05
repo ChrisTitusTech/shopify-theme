@@ -6,10 +6,10 @@ import { parseLineItemDownload, extractDownloads } from '../src/utils.js';
 // ---------------------------------------------------------------------------
 
 describe('parseLineItemDownload', () => {
-  it('returns the URL from the _download_url customAttribute', () => {
+  it('returns the URL from the download_url customAttribute', () => {
     const item = {
       title: 'CTT Linux Course',
-      customAttributes: [{ key: '_download_url', value: 'https://cdn.cttstore.com/linux.zip' }],
+      customAttributes: [{ key: 'download_url', value: 'https://cdn.cttstore.com/linux.zip' }],
     };
     expect(parseLineItemDownload(item)).toEqual({
       title: 'CTT Linux Course',
@@ -22,7 +22,7 @@ describe('parseLineItemDownload', () => {
     expect(parseLineItemDownload(item)).toBeNull();
   });
 
-  it('returns null when customAttributes has no _download_url key', () => {
+  it('returns null when customAttributes has no download_url key', () => {
     const item = {
       title: 'Gift Card',
       customAttributes: [{ key: 'gift_note', value: 'Happy Birthday' }],
@@ -30,18 +30,18 @@ describe('parseLineItemDownload', () => {
     expect(parseLineItemDownload(item)).toBeNull();
   });
 
-  it('returns null when _download_url value is an empty string', () => {
+  it('returns null when download_url value is an empty string', () => {
     const item = {
       title: 'Blank URL',
-      customAttributes: [{ key: '_download_url', value: '' }],
+      customAttributes: [{ key: 'download_url', value: '' }],
     };
     expect(parseLineItemDownload(item)).toBeNull();
   });
 
-  it('returns null when _download_url value is only whitespace', () => {
+  it('returns null when download_url value is only whitespace', () => {
     const item = {
       title: 'Whitespace URL',
-      customAttributes: [{ key: '_download_url', value: '   ' }],
+      customAttributes: [{ key: 'download_url', value: '   ' }],
     };
     expect(parseLineItemDownload(item)).toBeNull();
   });
@@ -60,12 +60,12 @@ describe('parseLineItemDownload', () => {
     expect(parseLineItemDownload(item)).toBeNull();
   });
 
-  it('ignores other attributes and returns only the _download_url value', () => {
+  it('ignores other attributes and returns only the download_url value', () => {
     const item = {
       title: 'Windows Toolbox',
       customAttributes: [
         { key: 'color', value: 'blue' },
-        { key: '_download_url', value: 'https://cdn.cttstore.com/toolbox.exe' },
+        { key: 'download_url', value: 'https://cdn.cttstore.com/toolbox.exe' },
         { key: 'size', value: 'large' },
       ],
     };
@@ -78,7 +78,7 @@ describe('parseLineItemDownload', () => {
   it('returns the correct title from the line item', () => {
     const item = {
       title: 'CTT Pro Bundle',
-      customAttributes: [{ key: '_download_url', value: 'https://cdn.cttstore.com/pro-bundle.zip' }],
+      customAttributes: [{ key: 'download_url', value: 'https://cdn.cttstore.com/pro-bundle.zip' }],
     };
     expect(parseLineItemDownload(item)).toEqual({
       title: 'CTT Pro Bundle',
@@ -97,7 +97,7 @@ describe('extractDownloads', () => {
       { title: 'Physical T-Shirt', customAttributes: [] },
       {
         title: 'Linux Pro Course',
-        customAttributes: [{ key: '_download_url', value: 'https://cdn.cttstore.com/linux-pro.zip' }],
+        customAttributes: [{ key: 'download_url', value: 'https://cdn.cttstore.com/linux-pro.zip' }],
       },
     ];
     expect(extractDownloads(lineItems)).toEqual([
@@ -109,11 +109,11 @@ describe('extractDownloads', () => {
     const lineItems = [
       {
         title: 'Course A',
-        customAttributes: [{ key: '_download_url', value: 'https://cdn.cttstore.com/a.zip' }],
+        customAttributes: [{ key: 'download_url', value: 'https://cdn.cttstore.com/a.zip' }],
       },
       {
         title: 'Course B',
-        customAttributes: [{ key: '_download_url', value: 'https://cdn.cttstore.com/b.zip' }],
+        customAttributes: [{ key: 'download_url', value: 'https://cdn.cttstore.com/b.zip' }],
       },
     ];
     expect(extractDownloads(lineItems)).toEqual([
