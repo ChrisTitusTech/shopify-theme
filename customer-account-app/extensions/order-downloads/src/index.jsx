@@ -99,15 +99,22 @@ function OrderDownloadBlock() {
   if (items.length === 0) return null;
 
   return (
-    <s-stack direction="block" gap="base" padding="base">
+    <s-stack direction="block" gap="base">
       <s-divider />
-      <s-heading level={2}>Downloads</s-heading>
-      {items.map((dl) => (
-        <s-stack key={dl.title} direction="inline" alignItems="center" justifyContent="space-between">
-          <s-text type="strong">{dl.title}</s-text>
-          <s-button href={dl.url} target="_blank" variant="primary">Download</s-button>
-        </s-stack>
-      ))}
+      <s-stack direction="block" gap="small">
+        <s-heading level={2}>Downloads</s-heading>
+        <s-text color="subdued">Your digital products are ready to download.</s-text>
+      </s-stack>
+      <s-stack direction="block" gap="small">
+        {items.map((dl) => (
+          <s-box key={dl.title} background="subdued" padding="base" borderRadius="base">
+            <s-stack direction="inline" alignItems="center" justifyContent="space-between">
+              <s-text type="strong">{dl.title}</s-text>
+              <s-button href={dl.url} target="_blank" variant="primary">Download</s-button>
+            </s-stack>
+          </s-box>
+        ))}
+      </s-stack>
     </s-stack>
   );
 }

@@ -6,11 +6,11 @@ This is a custom Shopify theme based on Dawn (v15.4.1), built for cttstore.com.
 It uses **Shopify CLI 3.x** (`shopify` command) as the primary development and deployment tool.
 There is no Node/npm build step — all files are served directly to Shopify.
 
-This project modifies the base Dawn theme to create a custom storefront for digital products, with a focus on simplicity and dark mode support.
+This project modifies the base Dawn theme to create a custom storefront for digital products, with a fixed light mode UI.
 
 ### CSS Based on christitus.com
 
-The CSS is adapted from the main [christitus.com](https://christitus.com) site, with modifications to fit the Shopify theme structure and support dark mode. The main custom CSS file is `assets/christitus-overrides.css`, which contains all site-specific style overrides. This file is included in the theme's global `<head>` via `layout/theme.liquid`.
+The CSS is adapted from the main [christitus.com](https://christitus.com) site, with modifications to fit the Shopify theme structure. The main custom CSS file is `assets/christitus-overrides.css`, which contains all site-specific style overrides. This file is included in the theme's global `<head>` via `layout/theme.liquid`.
 
 Refrence the original CSS from christitus.com at /home/titus/github/website or if no directory exists, the github repo is located at https://github.com/ChrisTitusTech/website. The CSS is organized into sections for typography, layout, dark mode, and component styles. It includes custom properties (CSS variables) for colors and fonts, which are used throughout the theme for consistent styling.
 
@@ -35,19 +35,18 @@ locales/        # Translation strings (en.default.json, etc.)
 sections/       # Reusable page sections (.liquid + embedded {% schema %})
 snippets/       # Reusable partials rendered via {% render 'name' %}
 templates/      # Page templates as JSON (section references) or .liquid
-  customers/    # Customer account templates (account, order, login, etc.)
 ```
 
 ### Key customization files
 
 | File | Purpose |
 |------|---------|
-| `assets/christitus-overrides.css` | All site-specific style overrides (dark mode, fonts, layout) |
+| `assets/christitus-overrides.css` | All site-specific style overrides (light palette, fonts, layout) |
 | `layout/theme.liquid` | Global <head>, font loading, Font Awesome CDN |
-| `sections/main-account.liquid` | Customer account page — orders list + downloads section |
-| `sections/main-order.liquid` | Individual order detail page — line items + download buttons |
 
 ---
+
+Note: Classic Customer Accounts have been fully deprecated by Shopify and all related files have been removed from this theme. Customer account functionality is handled by Shopify's New Customer Accounts system. The download extension (`customer-account-app/`) is a separate Shopify app deployed via `shopify app deploy`.
 
 ## Development Workflow
 

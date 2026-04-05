@@ -32,33 +32,9 @@
 
 /* -----------------------------------------------------------------------------
    2. THEME VARIABLES
-   Dark is the default; html[data-theme="light"] overrides to light palette.
-   Toggled via cttToggleTheme() in theme-toggle.js; persisted in localStorage.
    ----------------------------------------------------------------------------- */
 
 :root {
-  /* Dark palette */
-  --ctt-bg:           #212529;
-  --ctt-bg-elevated:  #2c3034;
-  --ctt-bg-subtle:    #343a40;
-  --ctt-bg-row-alt:   #2b3035;
-  --ctt-text:         #dee2e6;
-  --ctt-text-muted:   #adb5bd;
-  --ctt-text-subtle:  #6c757d;
-  --ctt-border:       #373b3e;
-  --ctt-border-ui:    #495057;
-  --ctt-accent:       #47c4f1;
-  --ctt-accent-hover: #2ab0dc;
-  --ctt-accent-rgb:   71, 196, 241;
-  --ctt-overlay:      rgba(0, 0, 0, 0.7);
-  /* Dawn RGB overrides (used via rgb(var(--color-*)) in Dawn's base.css) */
-  --color-background: 33, 37, 41;
-  --color-foreground: 222, 226, 230;
-  --color-link:       71, 196, 241;
-}
-
-html[data-theme="light"] {
-  /* Light palette */
   --ctt-bg:           #ffffff;
   --ctt-bg-elevated:  #f8f9fa;
   --ctt-bg-subtle:    #e9ecef;
@@ -72,28 +48,17 @@ html[data-theme="light"] {
   --ctt-accent-hover: #0a6fa8;
   --ctt-accent-rgb:   14, 134, 200;
   --ctt-overlay:      rgba(0, 0, 0, 0.4);
-  /* Dawn RGB overrides */
+  /* Dawn RGB overrides (used via rgb(var(--color-*)) in Dawn's base.css) */
   --color-background: 255, 255, 255;
   --color-foreground: 33, 37, 41;
   --color-link:       14, 134, 200;
 }
 
-/* Override Dawn's per-section color scheme variables to respect our dark/light palette.
-   Dawn's {% style %} block outputs .color-scheme-N { --color-background: ... } which
-   overrides :root — these rules win them back so dark mode applies on every page section. */
+/* Override Dawn's per-section color scheme variables — Dawn's {% style %} block outputs
+   .color-scheme-N { --color-background: ... } which overrides :root, so these rules win
+   them back so the light palette applies on every page section. */
 .color-scheme-1, .color-scheme-2, .color-scheme-3,
 .color-scheme-4, .color-scheme-5 {
-  --color-background:    33, 37, 41;
-  --color-foreground:    222, 226, 230;
-  --color-link:          71, 196, 241;
-  --gradient-background: #212529;
-}
-
-html[data-theme="light"] .color-scheme-1,
-html[data-theme="light"] .color-scheme-2,
-html[data-theme="light"] .color-scheme-3,
-html[data-theme="light"] .color-scheme-4,
-html[data-theme="light"] .color-scheme-5 {
   --color-background:    255, 255, 255;
   --color-foreground:    33, 37, 41;
   --color-link:          14, 134, 200;
@@ -750,29 +715,4 @@ hr {
   background-color: var(--ctt-overlay);
 }
 
-/* -----------------------------------------------------------------------------
-   17. THEME TOGGLE BUTTON
-   ----------------------------------------------------------------------------- */
-
-#ctt-theme-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 4.4rem;
-  height: 4.4rem;
-  color: var(--ctt-text);
-  transition: color 0.2s ease;
-}
-
-#ctt-theme-toggle:hover {
-  color: var(--ctt-accent);
-}
-
-#ctt-theme-toggle svg {
-  display: block;
-}
 
