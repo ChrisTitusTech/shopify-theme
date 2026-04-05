@@ -103,8 +103,8 @@ function OrderDownloadBlock() {
       <s-divider />
       <s-heading level={2}>Downloads</s-heading>
       {items.map((dl) => (
-        <s-stack key={dl.title} direction="inline" alignment="center" gap="loose">
-          <s-text size="large" style="flex: 1">{dl.title}</s-text>
+        <s-stack key={dl.title} direction="inline" alignment="center" distribution="space-between">
+          <s-text size="large">{dl.title}</s-text>
           <s-button href={dl.url} target="_blank">Download</s-button>
         </s-stack>
       ))}
