@@ -493,6 +493,16 @@ label {
 .cart-items thead th {
   color: var(--ctt-text-muted);
   border-bottom: 1px solid var(--ctt-border);
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.cart-items thead th:first-child {
+  padding-left: 0;
+}
+
+.cart-items thead th:last-child {
+  padding-right: 0;
 }
 
 .cart-item__name a {
