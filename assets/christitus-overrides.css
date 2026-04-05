@@ -496,6 +496,7 @@ label {
   padding-left: 2rem;
   padding-right: 2rem;
   font-size: 1.4rem;
+  vertical-align: middle;
 }
 
 .cart-items thead th:first-child {
