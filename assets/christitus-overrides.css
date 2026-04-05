@@ -504,6 +504,30 @@ label {
    11. CART & CART NOTIFICATION
    ----------------------------------------------------------------------------- */
 
+/* The .gradient class (Dawn base.css) uses background: var(--gradient-background).
+   In dark mode we force all gradient-class elements to use the dark background so
+   cart pages, cart notification, and any section using the .gradient class are dark. */
+@media (prefers-color-scheme: dark) {
+  .gradient {
+    background: var(--ctt-bg) !important;
+  }
+
+  /* Cart page section containers */
+  cart-items,
+  .cart__footer-wrapper,
+  .cart-notification,
+  .cart-notification__wrapper,
+  .drawer__inner {
+    background-color: var(--ctt-bg) !important;
+  }
+
+  /* Cart notification pop-up specifically uses bg-elevated so it appears lifted */
+  .cart-notification,
+  .cart-notification__wrapper {
+    background-color: var(--ctt-bg-elevated) !important;
+  }
+}
+
 .cart-notification,
 .cart-notification__wrapper {
   background-color: var(--ctt-bg-elevated);
