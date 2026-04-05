@@ -44,11 +44,21 @@ const QUERY = `
   }
 `;
 
+const PREVIEW_DOWNLOADS = [
+  { title: 'Windows Toolbox', url: '#', orderName: '#1001' },
+  { title: 'CTT Linux Course', url: '#', orderName: '#1002' },
+];
+
 function DownloadsBlock() {
-  const { query } = useApi(TARGET);
+  const api = useApi(TARGET);
+  const { query } = api;
   const [downloads, setDownloads] = useState([]);
 
+  // Show example content when rendering inside the customizer editor
+  const isEditing = Boolean(api.extension?.editor);
+
   useEffect(() => {
+    if (isEditing) return;
     (async () => {
       try {
         const { data } = await query(QUERY);
@@ -64,15 +74,17 @@ function DownloadsBlock() {
         // Stay hidden on error — don't disrupt the orders list
       }
     })();
-  }, [query]);
+  }, [isEditing, query]);
 
-  if (downloads.length === 0) return null;
+  const items = isEditing ? PREVIEW_DOWNLOADS : downloads;
+
+  if (items.length === 0) return null;
 
   return (
     <BlockStack spacing="base">
       <Divider />
       <Heading level={2}>Your Downloads</Heading>
-      {downloads.map((dl) => (
+      {items.map((dl) => (
         <InlineStack
           key={`${dl.orderName}-${dl.title}`}
           blockAlignment="center"

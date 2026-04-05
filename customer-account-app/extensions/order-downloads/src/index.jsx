@@ -38,14 +38,23 @@ const QUERY = `
   }
 `;
 
+const PREVIEW_DOWNLOADS = [
+  { title: 'Windows Toolbox', url: '#' },
+  { title: 'CTT Linux Course', url: '#' },
+];
+
 function OrderDownloadBlock() {
-  const { query } = useApi(TARGET);
+  const api = useApi(TARGET);
+  const { query } = api;
   // useOrder() subscribes to the order subscribable from OrderStatusApi
   const order = useOrder();
   const [downloads, setDownloads] = useState([]);
 
+  // Show example content when rendering inside the customizer editor
+  const isEditing = Boolean(api.extension?.editor);
+
   useEffect(() => {
-    if (!order?.id) return;
+    if (isEditing || !order?.id) return;
     (async () => {
       try {
         const { data } = await query(QUERY, { variables: { orderId: order.id } });
@@ -55,16 +64,18 @@ function OrderDownloadBlock() {
         // Silently — block stays hidden on error
       }
     })();
-  }, [order?.id, query]);
+  }, [isEditing, order?.id, query]);
+
+  const items = isEditing ? PREVIEW_DOWNLOADS : downloads;
 
   // Render nothing if this order has no downloadable products
-  if (downloads.length === 0) return null;
+  if (items.length === 0) return null;
 
   return (
     <BlockStack spacing="base">
       <Divider />
       <Heading level={2}>Downloads</Heading>
-      {downloads.map((dl) => (
+      {items.map((dl) => (
         <InlineStack key={dl.title} blockAlignment="center" spacing="base">
           <Text>{dl.title}</Text>
           <Button kind="secondary" to={dl.url} target="_blank">

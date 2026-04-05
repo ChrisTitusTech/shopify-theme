@@ -38,7 +38,7 @@ describe('order-index.jsx — orders list downloads block', () => {
   });
 
   it('returns null when downloads array is empty', () => {
-    expect(src).toContain('downloads.length === 0');
+    expect(src).toContain('items.length === 0');
     expect(src).toContain('return null');
   });
 });
