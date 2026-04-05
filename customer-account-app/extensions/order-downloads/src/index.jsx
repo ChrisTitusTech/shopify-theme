@@ -1,6 +1,6 @@
 import '@shopify/ui-extensions/preact';
 import { render } from 'preact';
-import { useState, useEffect } from 'preact/hooks';
+import { useState, useEffect, useRef } from 'preact/hooks';
 
 // Extension target: customer-account.order-status.cart-line-list.render-after
 // Renders after the line-item list on the order status / order detail page
@@ -92,6 +92,55 @@ function OrderDownloadBlock() {
       unsubMeta();
     };
   }, []);
+
+  // On first render with real downloads, exchange each stored URL for a fresh
+  // 1-day signed URL via sign.php. The session token proves the caller is a
+  // logged-in customer; sign.php re-signs with the server's HMAC secret.
+  // Silently falls back to the original stored URL on any error so the button
+  // is never broken by a transient network failure or pre-auth page load.
+  const didRefresh = useRef(false);
+  useEffect(() => {
+    if (isEditing || didRefresh.current || downloads.length === 0) return;
+    didRefresh.current = true;
+
+    let cancelled = false;
+    async function refreshUrls() {
+      let token;
+      try {
+        token = await shopify.sessionToken.get();
+      } catch (_) {
+        // Not authenticated (pre-auth order status page) — keep stored URLs.
+        return;
+      }
+      if (!token) return;
+
+      const updates = {};
+      await Promise.all(downloads.map(async (dl) => {
+        try {
+          const slug = new URL(dl.url).searchParams.get('file');
+          if (!slug) return;
+          const res = await fetch(
+            `https://projects.christitus.com/sign.php?file=${encodeURIComponent(slug)}`,
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+          if (!res.ok) return;
+          const data = await res.json();
+          if (data?.url) updates[dl.title] = data.url;
+        } catch (_) {
+          // Network error or sign.php unavailable — silently keep stored URL.
+        }
+      }));
+
+      if (!cancelled && Object.keys(updates).length > 0) {
+        setDownloads((prev) =>
+          prev.map((dl) => (updates[dl.title] ? { ...dl, url: updates[dl.title] } : dl))
+        );
+      }
+    }
+
+    refreshUrls();
+    return () => { cancelled = true; };
+  }, [downloads.length, isEditing]);
 
   const items = isEditing ? PREVIEW_DOWNLOADS : downloads;
 
