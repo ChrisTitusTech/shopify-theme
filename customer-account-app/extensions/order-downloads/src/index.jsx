@@ -5,23 +5,52 @@ import { useState, useEffect } from 'preact/hooks';
 // Extension target: customer-account.order-status.cart-line-list.render-after
 // Renders after the line-item list on the order status / order detail page
 // in New Customer Accounts. Shows download buttons for products with a URL
-// stored as the download_url line item property (injected at add-to-cart time
-// via buy-buttons.liquid).
+// stored in the product's custom.url metafield (namespace="custom", key="url").
 //
-// Line item properties are available directly on shopify.lines (OrderStatusApi)
-// as CartLine.attributes — no GraphQL query or API capability required.
+// The metafield is declared in shopify.extension.toml via [[extensions.metafields]]
+// so Shopify auto-fetches it for each product in the order and exposes it via
+// shopify.appMetafields — no API capability or GraphQL query required.
+//
+// A fast path also checks CartLine.attributes for a download_url property that
+// buy-buttons.liquid injects at add-to-cart time (for newer orders).
 
 export default async () => {
   render(<OrderDownloadBlock />, document.body);
 };
 
-// Extract { title, url } entries from a CartLine[] by reading the download_url
-// custom attribute that buy-buttons.liquid injects at add-to-cart time.
-function extractFromLines(lines) {
+// Build a Map from product GID → download URL using appMetafields entries.
+// The metafield type is list.url, so value is a JSON array; we take the last
+// element to match the Liquid `| last` filter used in buy-buttons.liquid.
+function buildUrlMap(appMetafields) {
+  const map = new Map();
+  for (const entry of (appMetafields ?? [])) {
+    if (entry.target?.type !== 'product') continue;
+    const raw = entry.metafield?.value;
+    if (!raw) continue;
+    let url;
+    try {
+      const arr = JSON.parse(raw);
+      url = Array.isArray(arr) ? arr[arr.length - 1] : raw;
+    } catch {
+      url = raw;
+    }
+    if (url) map.set(entry.target.id, url);
+  }
+  return map;
+}
+
+function extractDownloads(lines, appMetafields) {
+  const urlMap = buildUrlMap(appMetafields);
   return (lines ?? []).flatMap((line) => {
+    // Fast path: download_url attribute set by buy-buttons.liquid at add-to-cart
     const urlAttr = line.attributes?.find((a) => a.key === 'download_url');
-    if (!urlAttr?.value) return [];
-    return [{ title: line.merchandise?.title ?? '', url: urlAttr.value }];
+    if (urlAttr?.value) return [{ title: line.merchandise?.title ?? '', url: urlAttr.value }];
+    // Primary path: look up the product's current metafield value
+    const productId = line.merchandise?.product?.id;
+    if (!productId) return [];
+    const url = urlMap.get(productId);
+    if (!url) return [];
+    return [{ title: line.merchandise?.title ?? '', url }];
   });
 }
 
@@ -34,17 +63,20 @@ function OrderDownloadBlock() {
   // shopify.extension.editor is defined only when rendering inside the customizer.
   const isEditing = Boolean(shopify.extension.editor);
 
-  // Initialise synchronously from the current lines value so the UI appears
-  // immediately without a loading flash on pages where lines are pre-populated.
   const [downloads, setDownloads] = useState(() =>
-    extractFromLines(shopify.lines.value)
+    extractDownloads(shopify.lines.value, shopify.appMetafields.value)
   );
 
   useEffect(() => {
-    // Re-read on any future lines changes (e.g. async hydration).
-    const update = () => setDownloads(extractFromLines(shopify.lines.value));
+    const update = () =>
+      setDownloads(extractDownloads(shopify.lines.value, shopify.appMetafields.value));
     update();
-    return shopify.lines.subscribe(update);
+    const unsubLines = shopify.lines.subscribe(update);
+    const unsubMeta = shopify.appMetafields.subscribe(update);
+    return () => {
+      unsubLines();
+      unsubMeta();
+    };
   }, []);
 
   const items = isEditing ? PREVIEW_DOWNLOADS : downloads;
