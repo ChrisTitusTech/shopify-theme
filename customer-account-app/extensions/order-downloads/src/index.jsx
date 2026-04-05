@@ -29,12 +29,25 @@ function buildUrlMap(appMetafields) {
     if (!raw) continue;
     let url;
     try {
-      const arr = JSON.parse(raw);
-      url = Array.isArray(arr) ? arr[arr.length - 1] : raw;
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        url = parsed[parsed.length - 1];
+      } else if (parsed && typeof parsed === 'object' && parsed.url) {
+        // link type metafield: {"text": "...", "url": "https://..."}
+        url = parsed.url;
+      } else {
+        url = raw;
+      }
     } catch {
       url = raw;
     }
-    if (url) map.set(entry.target.id, url);
+    if (url) {
+      // appMetafields returns numeric id; line.merchandise.product.id is a GID.
+      // Store both forms so the lookup works either way.
+      const numericId = entry.target.id;
+      map.set(numericId, url);
+      map.set(`gid://shopify/Product/${numericId}`, url);
+    }
   }
   return map;
 }
@@ -68,8 +81,9 @@ function OrderDownloadBlock() {
   );
 
   useEffect(() => {
-    const update = () =>
+    const update = () => {
       setDownloads(extractDownloads(shopify.lines.value, shopify.appMetafields.value));
+    };
     update();
     const unsubLines = shopify.lines.subscribe(update);
     const unsubMeta = shopify.appMetafields.subscribe(update);
@@ -89,8 +103,8 @@ function OrderDownloadBlock() {
       <s-divider />
       <s-heading level={2}>Downloads</s-heading>
       {items.map((dl) => (
-        <s-stack key={dl.title} direction="inline">
-          <s-text>{dl.title}</s-text>
+        <s-stack key={dl.title} direction="inline" alignment="center" gap="loose">
+          <s-text size="large" style="flex: 1">{dl.title}</s-text>
           <s-button href={dl.url} target="_blank">Download</s-button>
         </s-stack>
       ))}
