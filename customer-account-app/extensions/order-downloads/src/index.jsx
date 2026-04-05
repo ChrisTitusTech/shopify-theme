@@ -99,13 +99,13 @@ function OrderDownloadBlock() {
   if (items.length === 0) return null;
 
   return (
-    <s-stack direction="block" gap="base">
+    <s-stack direction="block" gap="base" padding="base">
       <s-divider />
       <s-heading level={2}>Downloads</s-heading>
       {items.map((dl) => (
-        <s-stack key={dl.title} direction="inline" alignment="center" distribution="space-between">
-          <s-text size="large">{dl.title}</s-text>
-          <s-button href={dl.url} target="_blank">Download</s-button>
+        <s-stack key={dl.title} direction="inline" alignItems="center" justifyContent="space-between">
+          <s-text type="strong">{dl.title}</s-text>
+          <s-button href={dl.url} target="_blank" variant="primary">Download</s-button>
         </s-stack>
       ))}
     </s-stack>
