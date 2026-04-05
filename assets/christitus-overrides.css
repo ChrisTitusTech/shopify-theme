@@ -490,21 +490,29 @@ label {
   border-color: var(--ctt-border);
 }
 
+.cart-items thead tr {
+  background-color: var(--ctt-bg-subtle);
+}
+
 .cart-items thead th {
   color: var(--ctt-text-muted);
+  border-top: 1px solid var(--ctt-border);
   border-bottom: 1px solid var(--ctt-border);
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding: 1.2rem 2rem;
   font-size: 1.4rem;
+  font-weight: 600;
   vertical-align: middle;
+  letter-spacing: 0.08rem;
 }
 
 .cart-items thead th:first-child {
-  padding-left: 0;
+  padding-left: 1.2rem;
+  border-radius: 4px 0 0 4px;
 }
 
 .cart-items thead th:last-child {
-  padding-right: 0;
+  padding-right: 1.2rem;
+  border-radius: 0 4px 4px 0;
 }
 
 .cart-item__name a {
