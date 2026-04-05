@@ -495,6 +495,7 @@ label {
   border-bottom: 1px solid var(--ctt-border);
   padding-left: 2rem;
   padding-right: 2rem;
+  font-size: 1.4rem;
 }
 
 .cart-items thead th:first-child {
