@@ -18,6 +18,9 @@ target = "customer-account.order-status.cart-line-list.render-after"
 namespace = "custom"
 key = "url"
 
+[extensions.capabilities]
+network_access = true
+
 # order-index.block.render is intentionally disabled:
 # that target provides only StandardApi (no shopify.lines) and
 # shopify.query() reaches the Storefront API which has no order
