@@ -8,10 +8,9 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@shopify/ui-extensions": "^2025.1.0",
-    "@shopify/ui-extensions-react": "^2025.1.0",
-    "react": "^18.3.1",
-    "react-reconciler": "^0.27.0"
+    "@shopify/ui-extensions": "^2025.10.0",
+    "@preact/signals": "^2.3.0",
+    "preact": "^10.25.0"
   },
   "devDependencies": {
     "vitest": "^2.1.0"

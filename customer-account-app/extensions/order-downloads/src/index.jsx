@@ -1,27 +1,20 @@
-import { useState, useEffect } from 'react';
-import {
-  reactExtension,
-  useApi,
-  useOrder,
-  BlockStack,
-  InlineStack,
-  Button,
-  Text,
-  Heading,
-  Divider,
-} from '@shopify/ui-extensions-react/customer-account';
+import '@shopify/ui-extensions/preact';
+import { render } from 'preact';
+import { useState, useEffect } from 'preact/hooks';
 import { extractDownloads } from './utils.js';
 
-const TARGET = 'customer-account.order-status.cart-line-list.render-after';
-
+// Extension target: customer-account.order-status.cart-line-list.render-after
 // Renders after the line-item list on the order status / order detail page
 // in New Customer Accounts. Shows download buttons for products with a URL
-// stored in the custom.url metafield.
-export default reactExtension(TARGET, () => <OrderDownloadBlock />);
+// stored as the download_url line item property (injected at add-to-cart time
+// via buy-buttons.liquid).
+
+export default async () => {
+  render(<OrderDownloadBlock />, document.body);
+};
 
 // GraphQL query against the Customer Account API.
-// The download URL is read from the download_url line item property, which
-// is injected as a hidden input in buy-buttons.liquid at add-to-cart time.
+// The download URL is read from the download_url line item property.
 const QUERY = `
   query OrderDownloads($orderId: ID!) {
     order(id: $orderId) {
@@ -44,27 +37,21 @@ const PREVIEW_DOWNLOADS = [
 ];
 
 function OrderDownloadBlock() {
-  const api = useApi(TARGET);
-  const { query } = api;
-  // useOrder() subscribes to the order subscribable from OrderStatusApi
-  const order = useOrder();
+  // shopify.order is a subscribable signal — Preact auto-re-renders on change.
+  const order = shopify.order.value;
+  // shopify.extension.editor is defined only when rendering inside the customizer.
+  const isEditing = Boolean(shopify.extension.editor);
   const [downloads, setDownloads] = useState([]);
-
-  // Show example content when rendering inside the customizer editor
-  const isEditing = Boolean(api.extension?.editor);
 
   useEffect(() => {
     if (isEditing || !order?.id) return;
-    (async () => {
-      try {
-        const { data } = await query(QUERY, { variables: { orderId: order.id } });
+    shopify.query(QUERY, { variables: { orderId: order.id } })
+      .then(({ data }) => {
         const nodes = data?.order?.lineItems?.nodes ?? [];
         setDownloads(extractDownloads(nodes));
-      } catch {
-        // Silently — block stays hidden on error
-      }
-    })();
-  }, [isEditing, order?.id, query]);
+      })
+      .catch(() => {});
+  }, [isEditing, order?.id]);
 
   const items = isEditing ? PREVIEW_DOWNLOADS : downloads;
 
@@ -72,17 +59,15 @@ function OrderDownloadBlock() {
   if (items.length === 0) return null;
 
   return (
-    <BlockStack spacing="base">
-      <Divider />
-      <Heading level={2}>Downloads</Heading>
+    <s-stack direction="block" gap="base">
+      <s-divider />
+      <s-heading level={2}>Downloads</s-heading>
       {items.map((dl) => (
-        <InlineStack key={dl.title} blockAlignment="center" spacing="base">
-          <Text>{dl.title}</Text>
-          <Button kind="secondary" to={dl.url} target="_blank">
-            Download
-          </Button>
-        </InlineStack>
+        <s-stack key={dl.title} direction="inline">
+          <s-text>{dl.title}</s-text>
+          <s-button href={dl.url} target="_blank">Download</s-button>
+        </s-stack>
       ))}
-    </BlockStack>
+    </s-stack>
   );
 }
