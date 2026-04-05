@@ -37,11 +37,17 @@ const PREVIEW_DOWNLOADS = [
 ];
 
 function OrderDownloadBlock() {
-  // shopify.order is a subscribable signal — Preact auto-re-renders on change.
-  const order = shopify.order.value;
+  // shopify.order is a SubscribableSignalLike — subscribe explicitly for reliability.
+  const [order, setOrder] = useState(() => shopify.order.value);
+  const [downloads, setDownloads] = useState([]);
+
+  useEffect(() => {
+    setOrder(shopify.order.value);
+    return shopify.order.subscribe(setOrder);
+  }, []);
+
   // shopify.extension.editor is defined only when rendering inside the customizer.
   const isEditing = Boolean(shopify.extension.editor);
-  const [downloads, setDownloads] = useState([]);
 
   useEffect(() => {
     if (isEditing || !order?.id) return;
@@ -50,7 +56,7 @@ function OrderDownloadBlock() {
         const nodes = data?.order?.lineItems?.nodes ?? [];
         setDownloads(extractDownloads(nodes));
       })
-      .catch(() => {});
+      .catch((err) => console.error('[order-downloads]', err));
   }, [isEditing, order?.id]);
 
   const items = isEditing ? PREVIEW_DOWNLOADS : downloads;
