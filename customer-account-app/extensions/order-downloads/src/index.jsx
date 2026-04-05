@@ -1,6 +1,6 @@
 import '@shopify/ui-extensions/preact';
 import { render } from 'preact';
-import { useState, useEffect, useRef } from 'preact/hooks';
+import { useState, useEffect } from 'preact/hooks';
 
 // Extension target: customer-account.order-status.cart-line-list.render-after
 // Renders after the line-item list on the order status / order detail page
@@ -55,9 +55,19 @@ function buildUrlMap(appMetafields) {
 function extractDownloads(lines, appMetafields) {
   const urlMap = buildUrlMap(appMetafields);
   return (lines ?? []).flatMap((line) => {
-    // Fast path: download_url attribute set by buy-buttons.liquid at add-to-cart
+    // Fast path: download_url attribute set by buy-buttons.liquid at add-to-cart.
+    // The stored value may be a plain URL string OR a link-type metafield JSON
+    // string {"url":"...","text":"..."} (if the product metafield is a link type).
+    // Parse JSON so either format resolves to a plain URL.
     const urlAttr = line.attributes?.find((a) => a.key === '_download_url');
-    if (urlAttr?.value) return [{ title: line.merchandise?.title ?? '', url: urlAttr.value }];
+    if (urlAttr?.value) {
+      let url = urlAttr.value;
+      try {
+        const parsed = JSON.parse(url);
+        if (parsed && typeof parsed === 'object' && parsed.url) url = parsed.url;
+      } catch (_) {}
+      if (url.startsWith('http')) return [{ title: line.merchandise?.title ?? '', url }];
+    }
     // Primary path: look up the product's current metafield value
     const productId = line.merchandise?.product?.id;
     if (!productId) return [];
@@ -93,15 +103,12 @@ function OrderDownloadBlock() {
     };
   }, []);
 
-  // On first render with real downloads, exchange each stored URL for a fresh
-  // 1-day signed URL via sign.php. The session token proves the caller is a
-  // logged-in customer; sign.php re-signs with the server's HMAC secret.
-  // Silently falls back to the original stored URL on any error so the button
-  // is never broken by a transient network failure or pre-auth page load.
-  const didRefresh = useRef(false);
+  // Every time downloads populates (i.e. every page load / order status view),
+  // call sign.php to replace each stored URL with a fresh 1-day signed URL.
+  // The session token proves the caller is a logged-in customer.
+  // Falls back silently to the stored URL on network error or pre-auth state.
   useEffect(() => {
-    if (isEditing || didRefresh.current || downloads.length === 0) return;
-    didRefresh.current = true;
+    if (isEditing || downloads.length === 0) return;
 
     let cancelled = false;
     async function refreshUrls() {

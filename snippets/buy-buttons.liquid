@@ -57,10 +57,17 @@
         >
 
         {%- if product.metafields.custom.url != blank -%}
+          {%- liquid
+            assign _download_url_val = product.metafields.custom.url
+            assign _download_url_parsed = _download_url_val | parse_json
+            if _download_url_parsed.url != blank
+              assign _download_url_val = _download_url_parsed.url
+            endif
+          -%}
           <input
             type="hidden"
             name="properties[_download_url]"
-            value="{{ product.metafields.custom.url }}"
+            value="{{ _download_url_val }}"
           >
         {%- endif -%}
 
