@@ -9,3 +9,7 @@ handle = "order-downloads"
 [[extensions.targeting]]
 module = "./src/index.jsx"
 target = "customer-account.order-status.cart-line-list.render-after"
+
+[[extensions.targeting]]
+module = "./src/order-index.jsx"
+target = "customer-account.order-index.block.render"

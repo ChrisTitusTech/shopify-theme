@@ -41,4 +41,12 @@ describe('vps/admin.php — embedded admin page', () => {
     expect(php).toContain('X-Content-Type-Options');
     expect(php).toContain('nosniff');
   });
+
+  it('does NOT set X-Frame-Options (invalid for cross-origin embedding; CSP frame-ancestors is used instead)', () => {
+    const php = readFileSync(join(VPS_DIR, 'admin.php'), 'utf-8');
+    // X-Frame-Options has no valid value for arbitrary-origin iframing.
+    // Shopify admin embedding is controlled solely by frame-ancestors CSP.
+    expect(php).not.toContain("header('X-Frame-Options");
+    expect(php).not.toContain('header("X-Frame-Options');
+  });
 });

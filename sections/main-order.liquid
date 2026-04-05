@@ -23,7 +23,6 @@
   <div>
     <div>
       <h2>{{ 'customer.order.title' | t: name: order.name }}</h2>
-      <p>Visit <a href="{{ order.order_status_url }}">Order Confirmation Page</a> if your order contains downloadable products.</p>
       {%- assign order_date = order.created_at | time_tag: format: 'date_at_time' -%}
       <p>{{ 'customer.order.date_html' | t: date: order_date }}</p>
       {%- if order.cancelled -%}
