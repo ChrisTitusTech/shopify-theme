@@ -204,7 +204,7 @@
                 {%- else -%}
                   {{ line_item.original_line_price | money }}
                 {%- endif -%}
-                {%- assign current_download_url = line_item.product.metafields.custom.url | last -%}
+                {%- assign current_download_url = line_item.product.metafields.custom.url -%}
                 {%- if current_download_url != blank -%}
                   <a href="{{ current_download_url }}"
                     ><button class="btn" style="padding: 2px 20px; float:right">Download</button></a

@@ -149,7 +149,7 @@ Use this to test Liquid snippets and filters against live store data interactive
 
 ## Liquid Conventions
 
-- **Metafields**: Download URLs are stored as `list.url` type at `product.metafields.custom.url`. Always use `| last` to get the current URL and avoid showing historical entries from the list.
+- **Metafields**: Download URLs are stored as a single `url` (Link) type at `product.metafields.custom.url`. Output directly with `{{ product.metafields.custom.url }}` — do NOT use `| last` (that returns the last character of a string, not a list item).
 - **Customer orders**: `customer.orders` is sorted newest-first. Use `customer.orders.first` for the most recent order.
 - **Snippets**: Use `{% render 'snippet-name', param: value %}` — never `{% include %}` (deprecated).
 - **Sections**: Each section file contains its own `{% schema %}` block at the bottom.
