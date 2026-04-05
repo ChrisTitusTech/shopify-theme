@@ -490,6 +490,11 @@ label {
   border-color: var(--ctt-border);
 }
 
+.cart-items thead th {
+  color: var(--ctt-text-muted);
+  border-bottom: 1px solid var(--ctt-border);
+}
+
 .cart-item__name a {
   color: var(--ctt-text);
 }
