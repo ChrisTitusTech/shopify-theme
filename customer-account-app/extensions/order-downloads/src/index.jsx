@@ -1,35 +1,29 @@
 import '@shopify/ui-extensions/preact';
 import { render } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
-import { extractDownloads } from './utils.js';
 
 // Extension target: customer-account.order-status.cart-line-list.render-after
 // Renders after the line-item list on the order status / order detail page
 // in New Customer Accounts. Shows download buttons for products with a URL
 // stored as the download_url line item property (injected at add-to-cart time
 // via buy-buttons.liquid).
+//
+// Line item properties are available directly on shopify.lines (OrderStatusApi)
+// as CartLine.attributes — no GraphQL query or API capability required.
 
 export default async () => {
   render(<OrderDownloadBlock />, document.body);
 };
 
-// GraphQL query against the Customer Account API.
-// The download URL is read from the download_url line item property.
-const QUERY = `
-  query OrderDownloads($orderId: ID!) {
-    order(id: $orderId) {
-      lineItems(first: 50) {
-        nodes {
-          title
-          customAttributes {
-            key
-            value
-          }
-        }
-      }
-    }
-  }
-`;
+// Extract { title, url } entries from a CartLine[] by reading the download_url
+// custom attribute that buy-buttons.liquid injects at add-to-cart time.
+function extractFromLines(lines) {
+  return (lines ?? []).flatMap((line) => {
+    const urlAttr = line.attributes?.find((a) => a.key === 'download_url');
+    if (!urlAttr?.value) return [];
+    return [{ title: line.merchandise?.title ?? '', url: urlAttr.value }];
+  });
+}
 
 const PREVIEW_DOWNLOADS = [
   { title: 'Windows Toolbox', url: '#' },
@@ -37,31 +31,25 @@ const PREVIEW_DOWNLOADS = [
 ];
 
 function OrderDownloadBlock() {
-  // shopify.order is a SubscribableSignalLike — subscribe explicitly for reliability.
-  const [order, setOrder] = useState(() => shopify.order.value);
-  const [downloads, setDownloads] = useState([]);
-
-  useEffect(() => {
-    setOrder(shopify.order.value);
-    return shopify.order.subscribe(setOrder);
-  }, []);
-
   // shopify.extension.editor is defined only when rendering inside the customizer.
   const isEditing = Boolean(shopify.extension.editor);
 
+  // Initialise synchronously from the current lines value so the UI appears
+  // immediately without a loading flash on pages where lines are pre-populated.
+  const [downloads, setDownloads] = useState(() =>
+    extractFromLines(shopify.lines.value)
+  );
+
   useEffect(() => {
-    if (isEditing || !order?.id) return;
-    shopify.query(QUERY, { variables: { orderId: order.id } })
-      .then(({ data }) => {
-        const nodes = data?.order?.lineItems?.nodes ?? [];
-        setDownloads(extractDownloads(nodes));
-      })
-      .catch((err) => console.error('[order-downloads]', err));
-  }, [isEditing, order?.id]);
+    // Re-read on any future lines changes (e.g. async hydration).
+    const update = () => setDownloads(extractFromLines(shopify.lines.value));
+    update();
+    return shopify.lines.subscribe(update);
+  }, []);
 
   const items = isEditing ? PREVIEW_DOWNLOADS : downloads;
 
-  // Render nothing if this order has no downloadable products
+  // Render nothing if this order has no downloadable products.
   if (items.length === 0) return null;
 
   return (

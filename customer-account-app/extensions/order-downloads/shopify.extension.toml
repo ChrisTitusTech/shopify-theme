@@ -10,6 +10,10 @@ handle = "order-downloads"
 module = "./src/index.jsx"
 target = "customer-account.order-status.cart-line-list.render-after"
 
-[[extensions.targeting]]
-module = "./src/order-index.jsx"
-target = "customer-account.order-index.block.render"
+# order-index.block.render is intentionally disabled:
+# that target provides only StandardApi (no shopify.lines) and
+# shopify.query() reaches the Storefront API which has no order
+# line-item customAttributes. It requires a backend proxy to work.
+# [[extensions.targeting]]
+# module = "./src/order-index.jsx"
+# target = "customer-account.order-index.block.render"
