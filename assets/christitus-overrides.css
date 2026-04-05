@@ -54,15 +54,47 @@
   --color-link:       14, 134, 200;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ctt-bg:           #1a1b1e;
+    --ctt-bg-elevated:  #25262b;
+    --ctt-bg-subtle:    #2c2e33;
+    --ctt-bg-row-alt:   #25262b;
+    --ctt-text:         #e9ecef;
+    --ctt-text-muted:   #ced4da;
+    --ctt-text-subtle:  #adb5bd;
+    --ctt-border:       #373a40;
+    --ctt-border-ui:    #373a40;
+    --ctt-accent:       #0e86c8;
+    --ctt-accent-hover: #1a9fdf;
+    --ctt-accent-rgb:   14, 134, 200;
+    --ctt-overlay:      rgba(0, 0, 0, 0.6);
+    /* Dawn RGB overrides */
+    --color-background: 26, 27, 30;
+    --color-foreground: 233, 236, 239;
+    --color-link:       14, 134, 200;
+  }
+}
+
 /* Override Dawn's per-section color scheme variables — Dawn's {% style %} block outputs
    .color-scheme-N { --color-background: ... } which overrides :root, so these rules win
-   them back so the light palette applies on every page section. */
+   them back so the palette applies on every page section. */
 .color-scheme-1, .color-scheme-2, .color-scheme-3,
 .color-scheme-4, .color-scheme-5 {
   --color-background:    255, 255, 255;
   --color-foreground:    33, 37, 41;
   --color-link:          14, 134, 200;
   --gradient-background: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  .color-scheme-1, .color-scheme-2, .color-scheme-3,
+  .color-scheme-4, .color-scheme-5 {
+    --color-background:    26, 27, 30;
+    --color-foreground:    233, 236, 239;
+    --color-link:          14, 134, 200;
+    --gradient-background: #1a1b1e;
+  }
 }
 
 /* -----------------------------------------------------------------------------
