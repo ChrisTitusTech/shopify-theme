@@ -11,7 +11,7 @@
  */
 export function parseLineItemDownload(lineItem) {
   const attrs = lineItem?.customAttributes;
-  const attr = Array.isArray(attrs) ? attrs.find((a) => a.key === 'download_url') : null;
+  const attr = Array.isArray(attrs) ? attrs.find((a) => a.key === '_download_url') : null;
   const url = attr?.value;
   if (!url || typeof url !== 'string' || url.trim() === '') return null;
   return { title: lineItem.title, url };

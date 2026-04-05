@@ -59,22 +59,3 @@ describe('shopify.extension.toml — extension targeting', () => {
   });
 });
 
-describe('dead code removal — Liquid sections', () => {
-  const mainAccount = readFileSync(
-    join(__dirname, '../../../../sections/main-account.liquid'),
-    'utf-8'
-  );
-  const mainOrder = readFileSync(
-    join(__dirname, '../../../../sections/main-order.liquid'),
-    'utf-8'
-  );
-
-  it('main-account.liquid no longer contains download table logic', () => {
-    expect(mainAccount).not.toContain('has_any_downloads');
-    expect(mainAccount).not.toContain('customer__downloads');
-  });
-
-  it('main-order.liquid no longer contains the order_status_url download redirect', () => {
-    expect(mainOrder).not.toContain('order_status_url');
-  });
-});

@@ -56,7 +56,7 @@ function extractDownloads(lines, appMetafields) {
   const urlMap = buildUrlMap(appMetafields);
   return (lines ?? []).flatMap((line) => {
     // Fast path: download_url attribute set by buy-buttons.liquid at add-to-cart
-    const urlAttr = line.attributes?.find((a) => a.key === 'download_url');
+    const urlAttr = line.attributes?.find((a) => a.key === '_download_url');
     if (urlAttr?.value) return [{ title: line.merchandise?.title ?? '', url: urlAttr.value }];
     // Primary path: look up the product's current metafield value
     const productId = line.merchandise?.product?.id;
