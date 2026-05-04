@@ -120,9 +120,80 @@
         "padding_top": 0,
         "padding_bottom": 0
       }
+    },
+    "featured_product_aVErk3": {
+      "type": "featured-product",
+      "blocks": {
+        "text_PKcDbx": {
+          "type": "text",
+          "settings": {
+            "text": "{{ section.settings.product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title_zaybrW": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h1"
+          }
+        },
+        "price_QWPCaX": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker_e3zV9P": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector_aKnpKR": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons_8r9iRq": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "share_efFiyV": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "text_PKcDbx",
+        "title_zaybrW",
+        "price_QWPCaX",
+        "variant_picker_e3zV9P",
+        "quantity_selector_aKnpKR",
+        "buy_buttons_8r9iRq",
+        "share_efFiyV"
+      ],
+      "name": "t:sections.featured-product.presets.name",
+      "settings": {
+        "product": "the-linux-desktop-guide-1",
+        "color_scheme": "",
+        "secondary_background": false,
+        "media_size": "small",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
     }
   },
   "order": [
-    "featured_product_pWbgjp"
+    "featured_product_pWbgjp",
+    "featured_product_aVErk3"
   ]
 }
