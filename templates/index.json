@@ -1,1 +1,128 @@
-{"sections":{"featured_product_pWbgjp":{"type":"featured-product","blocks":{"text_tJ88qN":{"type":"text","settings":{"text":"{{ section.settings.product.vendor }}","text_style":"uppercase"}},"title_HkRdkA":{"type":"title","settings":{"heading_size":"h1"}},"price_kEKUjG":{"type":"price","settings":{}},"text_drQhPJ":{"type":"text","settings":{"text":"<strong>Transform your Windows experience with one powerful solution.<\/strong>","text_style":"body"}},"text_jYAyjV":{"type":"text","settings":{"text":"✅ <strong>One-Click Program Installation<\/strong> - Install multiple essential programs instantly with zero hassle","text_style":"body"}},"text_BxQkQy":{"type":"text","settings":{"text":"✅ <strong>Advanced Windows Optimization<\/strong> - Automatically configure your system for peak performance","text_style":"body"}},"text_cQHdH9":{"type":"text","settings":{"text":"✅ <strong>Custom ISO Creation<\/strong> - Generate your own MicroWin ISO for clean, debloated Windows installations","text_style":"body"}},"text_DffRPq":{"type":"text","settings":{"text":"✅ <strong>Ready-to-Deploy Solution<\/strong> - Get a streamlined Windows experience right out of the box","text_style":"body"}},"variant_picker_BGN9UR":{"type":"variant_picker","settings":{"picker_type":"button","swatch_shape":"circle"}},"text_jJWDrm":{"type":"text","settings":{"text":"Your purchase helps fund development and fix any issues or bugs the project encounters! ","text_style":"body"}},"buy_buttons_iVWQhb":{"type":"buy_buttons","settings":{"show_dynamic_checkout":true,"show_gift_card_recipient":true}},"share_UjwfBh":{"type":"share","settings":{"share_label":"Share"}}},"block_order":["text_tJ88qN","title_HkRdkA","price_kEKUjG","text_drQhPJ","text_jYAyjV","text_BxQkQy","text_cQHdH9","text_DffRPq","variant_picker_BGN9UR","text_jJWDrm","buy_buttons_iVWQhb","share_UjwfBh"],"settings":{"product":"windows-toolbox","color_scheme":"scheme-3","secondary_background":false,"media_size":"medium","constrain_to_viewport":true,"media_fit":"cover","media_position":"left","image_zoom":"lightbox","hide_variants":false,"enable_video_looping":false,"padding_top":36,"padding_bottom":36}}},"order":["featured_product_pWbgjp"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "featured_product_pWbgjp": {
+      "type": "featured-product",
+      "blocks": {
+        "text_tJ88qN": {
+          "type": "text",
+          "settings": {
+            "text": "{{ section.settings.product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title_HkRdkA": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h1"
+          }
+        },
+        "price_kEKUjG": {
+          "type": "price",
+          "settings": {}
+        },
+        "text_drQhPJ": {
+          "type": "text",
+          "settings": {
+            "text": "<strong>Transform your Windows experience with one powerful solution.</strong>",
+            "text_style": "body"
+          }
+        },
+        "text_jYAyjV": {
+          "type": "text",
+          "settings": {
+            "text": "✅ <strong>One-Click Program Installation</strong> - Install multiple essential programs instantly with zero hassle",
+            "text_style": "body"
+          }
+        },
+        "text_BxQkQy": {
+          "type": "text",
+          "settings": {
+            "text": "✅ <strong>Advanced Windows Optimization</strong> - Automatically configure your system for peak performance",
+            "text_style": "body"
+          }
+        },
+        "text_cQHdH9": {
+          "type": "text",
+          "settings": {
+            "text": "✅ <strong>Custom ISO Creation</strong> - Generate your own Windows ISO for clean, debloated Windows installations",
+            "text_style": "body"
+          }
+        },
+        "text_DffRPq": {
+          "type": "text",
+          "settings": {
+            "text": "✅ <strong>Ready-to-Deploy Solution</strong> - Get a streamlined Windows experience right out of the box",
+            "text_style": "body"
+          }
+        },
+        "variant_picker_BGN9UR": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "text_jJWDrm": {
+          "type": "text",
+          "settings": {
+            "text": "Your purchase helps fund development and fix any issues or bugs the project encounters! ",
+            "text_style": "body"
+          }
+        },
+        "buy_buttons_iVWQhb": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "share_UjwfBh": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "text_tJ88qN",
+        "title_HkRdkA",
+        "price_kEKUjG",
+        "text_drQhPJ",
+        "text_jYAyjV",
+        "text_BxQkQy",
+        "text_cQHdH9",
+        "text_DffRPq",
+        "variant_picker_BGN9UR",
+        "text_jJWDrm",
+        "buy_buttons_iVWQhb",
+        "share_UjwfBh"
+      ],
+      "settings": {
+        "product": "windows-toolbox",
+        "color_scheme": "scheme-3",
+        "secondary_background": false,
+        "media_size": "small",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "featured_product_pWbgjp"
+  ]
+}
