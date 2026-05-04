@@ -120,9 +120,80 @@
         "padding_top": 0,
         "padding_bottom": 0
       }
+    },
+    "featured_product_ya9KDN": {
+      "type": "featured-product",
+      "blocks": {
+        "text_46GgCM": {
+          "type": "text",
+          "settings": {
+            "text": "{{ section.settings.product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title_CjeNgx": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h1"
+          }
+        },
+        "price_xyfarp": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker_Lk3X8n": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector_AgePz6": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons_NUznTk": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "share_TNDy8J": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "text_46GgCM",
+        "title_CjeNgx",
+        "price_xyfarp",
+        "variant_picker_Lk3X8n",
+        "quantity_selector_AgePz6",
+        "buy_buttons_NUznTk",
+        "share_TNDy8J"
+      ],
+      "name": "t:sections.featured-product.presets.name",
+      "settings": {
+        "product": "the-linux-desktop-guide-1",
+        "color_scheme": "scheme-1",
+        "secondary_background": false,
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
     }
   },
   "order": [
-    "featured_product_pWbgjp"
+    "featured_product_pWbgjp",
+    "featured_product_ya9KDN"
   ]
 }
