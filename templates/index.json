@@ -121,7 +121,35 @@
         "text_nGAaW7": {
           "type": "text",
           "settings": {
-            "text": "Linux can feel overwhelming when you are new. The Linux Desktop Guide helps you understand how Linux actually works so you can use it with confidence every day.",
+            "text": "<strong>Linux can feel overwhelming when you are new. The Linux Desktop Guide helps you understand how Linux actually works so you can use it with confidence every day.</strong>",
+            "text_style": "body"
+          }
+        },
+        "text_pX9eEg": {
+          "type": "text",
+          "settings": {
+            "text": "✅ <strong>Making the switch from Windows to Linux?</strong> Our guides break down the migration step-by-step. Just genuine solutions for real people ready to take back their computing experience.",
+            "text_style": "body"
+          }
+        },
+        "text_6MJ8dC": {
+          "type": "text",
+          "settings": {
+            "text": "✅<strong>Learn Essential Troubleshooting</strong> steps for when things <strong>DO</strong> go wrong in Linux",
+            "text_style": "body"
+          }
+        },
+        "text_KFpER8": {
+          "type": "text",
+          "settings": {
+            "text": "✅<strong>Obtain a deeper understanding on the Linux learning path. </strong>Which distro to pick? What Linux is made up of? The differences between it and Windows.",
+            "text_style": "body"
+          }
+        },
+        "text_yKUpN3": {
+          "type": "text",
+          "settings": {
+            "text": "<em>Download includes .EPUB and .PDF files. You can also purchase directly off amazon.com.</em>",
             "text_style": "body"
           }
         },
@@ -145,6 +173,10 @@
         "title_CQf6Vt",
         "price_Mn3NJY",
         "text_nGAaW7",
+        "text_pX9eEg",
+        "text_6MJ8dC",
+        "text_KFpER8",
+        "text_yKUpN3",
         "variant_picker_fRdLzz",
         "buy_buttons_8U43pm"
       ],
