@@ -57,13 +57,6 @@
             "text_style": "body"
           }
         },
-        "text_DffRPq": {
-          "type": "text",
-          "settings": {
-            "text": "✅ <strong>Ready-to-Deploy Solution</strong> - Get a streamlined Windows experience right out of the box",
-            "text_style": "body"
-          }
-        },
         "variant_picker_BGN9UR": {
           "type": "variant_picker",
           "settings": {
@@ -71,24 +64,11 @@
             "swatch_shape": "circle"
           }
         },
-        "text_jJWDrm": {
-          "type": "text",
-          "settings": {
-            "text": "Your purchase helps fund development and fix any issues or bugs the project encounters! ",
-            "text_style": "body"
-          }
-        },
         "buy_buttons_iVWQhb": {
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": true,
             "show_gift_card_recipient": true
-          }
-        },
-        "share_UjwfBh": {
-          "type": "share",
-          "settings": {
-            "share_label": "Share"
           }
         }
       },
@@ -100,11 +80,8 @@
         "text_jYAyjV",
         "text_BxQkQy",
         "text_cQHdH9",
-        "text_DffRPq",
         "variant_picker_BGN9UR",
-        "text_jJWDrm",
-        "buy_buttons_iVWQhb",
-        "share_UjwfBh"
+        "buy_buttons_iVWQhb"
       ],
       "settings": {
         "product": "windows-toolbox",
@@ -121,66 +98,62 @@
         "padding_bottom": 0
       }
     },
-    "featured_product_ya9KDN": {
+    "featured_product_bny7kk": {
       "type": "featured-product",
       "blocks": {
-        "text_46GgCM": {
+        "text_hAQW8A": {
           "type": "text",
           "settings": {
             "text": "{{ section.settings.product.vendor }}",
             "text_style": "uppercase"
           }
         },
-        "title_CjeNgx": {
+        "title_CQf6Vt": {
           "type": "title",
           "settings": {
             "heading_size": "h1"
           }
         },
-        "price_xyfarp": {
+        "price_Mn3NJY": {
           "type": "price",
           "settings": {}
         },
-        "variant_picker_Lk3X8n": {
+        "text_nGAaW7": {
+          "type": "text",
+          "settings": {
+            "text": "Linux can feel overwhelming when you are new. The Linux Desktop Guide helps you understand how Linux actually works so you can use it with confidence every day.",
+            "text_style": "body"
+          }
+        },
+        "variant_picker_fRdLzz": {
           "type": "variant_picker",
           "settings": {
             "picker_type": "button",
             "swatch_shape": "circle"
           }
         },
-        "quantity_selector_AgePz6": {
-          "type": "quantity_selector",
-          "settings": {}
-        },
-        "buy_buttons_NUznTk": {
+        "buy_buttons_8U43pm": {
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": true,
             "show_gift_card_recipient": true
           }
-        },
-        "share_TNDy8J": {
-          "type": "share",
-          "settings": {
-            "share_label": "Share"
-          }
         }
       },
       "block_order": [
-        "text_46GgCM",
-        "title_CjeNgx",
-        "price_xyfarp",
-        "variant_picker_Lk3X8n",
-        "quantity_selector_AgePz6",
-        "buy_buttons_NUznTk",
-        "share_TNDy8J"
+        "text_hAQW8A",
+        "title_CQf6Vt",
+        "price_Mn3NJY",
+        "text_nGAaW7",
+        "variant_picker_fRdLzz",
+        "buy_buttons_8U43pm"
       ],
       "name": "t:sections.featured-product.presets.name",
       "settings": {
         "product": "the-linux-desktop-guide-1",
-        "color_scheme": "scheme-1",
+        "color_scheme": "",
         "secondary_background": false,
-        "media_size": "medium",
+        "media_size": "small",
         "constrain_to_viewport": true,
         "media_fit": "contain",
         "media_position": "left",
@@ -194,6 +167,6 @@
   },
   "order": [
     "featured_product_pWbgjp",
-    "featured_product_ya9KDN"
+    "featured_product_bny7kk"
   ]
 }
