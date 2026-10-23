@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseLineItemDownload, extractDownloads } from '../src/utils.js';
+import { parseDownloadUrl, parseLineItemDownload, extractDownloads } from '../src/utils.js';
 
 // ---------------------------------------------------------------------------
 // parseLineItemDownload
@@ -132,5 +132,34 @@ describe('extractDownloads', () => {
 
   it('returns an empty array for an empty line items list', () => {
     expect(extractDownloads([])).toEqual([]);
+  });
+});
+
+
+describe('download URL security', () => {
+  it.each([
+    'javascript:alert(1)', 'data:text/html,<script>alert(1)</script>',
+    'http://example.com/file', 'httpx://example.com/file', '//example.com/file',
+    'https://user:pass@example.com/file', 'https://',
+    'https://example.com/\\evil', 'https://example.com/\nfile',
+    '{"url":42}', '{"url":"javascript:alert(1)"}', '["javascript:alert(1)"]',
+    'null', '42', '{}', null,
+  ])('rejects unsafe or malformed value %j', (value) => {
+    expect(parseDownloadUrl(value)).toBeNull();
+    expect(parseLineItemDownload({
+      title: 'Untrusted item', customAttributes: [{ key: '_download_url', value }],
+    })).toBeNull();
+  });
+
+  it.each([
+    'https://example.com/file?x=1&signature=abc%2Bdef',
+    '{"url":"https://example.com/file?x=1&signature=abc%2Bdef","text":"Download"}',
+    '["https://example.com/old","https://example.com/file?x=1&signature=abc%2Bdef"]',
+  ])('preserves signed URL bytes across supported encodings', (value) => {
+    expect(parseDownloadUrl(value)).toBe('https://example.com/file?x=1&signature=abc%2Bdef');
+  });
+
+  it('ignores malformed attribute entries', () => {
+    expect(parseLineItemDownload({ title: 'Bad item', customAttributes: [null] })).toBeNull();
   });
 });

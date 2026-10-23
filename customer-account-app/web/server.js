@@ -9,9 +9,12 @@ const CLIENT_ID = process.env.SHOPIFY_API_KEY || '';
 
 // Inject the client_id for App Bridge auto-init at startup (not per-request)
 const html = readFileSync(join(__dirname, 'index.html'), 'utf-8')
-  .replace('__CLIENT_ID__', CLIENT_ID);
+  .replace('__CLIENT_ID__', () => CLIENT_ID.replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  })[char]));
 
-createServer((req, res) => {
+const server = createServer((req, res) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
   // Health check for Shopify CLI tunnel readiness probe
   if (req.url === '/health') {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -27,5 +30,5 @@ createServer((req, res) => {
   });
   res.end(html);
 }).listen(PORT, () => {
-  console.log(`CTT Downloads admin page running on http://localhost:${PORT}`);
+  console.log(`CTT Downloads admin page running on http://localhost:${server.address().port}`);
 });

@@ -1,6 +1,7 @@
 import '@shopify/ui-extensions/preact';
 import { render } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
+import { parseDownloadUrl } from './utils.js';
 
 // Extension target: customer-account.order-status.cart-line-list.render-after
 // Renders after the line-item list on the order status / order detail page
@@ -27,20 +28,7 @@ function buildUrlMap(appMetafields) {
     if (entry.target?.type !== 'product') continue;
     const raw = entry.metafield?.value;
     if (!raw) continue;
-    let url;
-    try {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) {
-        url = parsed[parsed.length - 1];
-      } else if (parsed && typeof parsed === 'object' && parsed.url) {
-        // link type metafield: {"text": "...", "url": "https://..."}
-        url = parsed.url;
-      } else {
-        url = raw;
-      }
-    } catch {
-      url = raw;
-    }
+    const url = parseDownloadUrl(raw);
     if (url) {
       // appMetafields returns numeric id; line.merchandise.product.id is a GID.
       // Store both forms so the lookup works either way.
@@ -59,15 +47,9 @@ function extractDownloads(lines, appMetafields) {
     // The stored value may be a plain URL string OR a link-type metafield JSON
     // string {"url":"...","text":"..."} (if the product metafield is a link type).
     // Parse JSON so either format resolves to a plain URL.
-    const urlAttr = line.attributes?.find((a) => a.key === '_download_url');
-    if (urlAttr?.value) {
-      let url = urlAttr.value;
-      try {
-        const parsed = JSON.parse(url);
-        if (parsed && typeof parsed === 'object' && parsed.url) url = parsed.url;
-      } catch (_) {}
-      if (url.startsWith('http')) return [{ title: line.merchandise?.title ?? '', url }];
-    }
+    const urlAttr = line.attributes?.find((a) => a?.key === '_download_url');
+    const attributeUrl = parseDownloadUrl(urlAttr?.value);
+    if (attributeUrl) return [{ title: line.merchandise?.title ?? '', url: attributeUrl }];
     // Primary path: look up the product's current metafield value
     const productId = line.merchandise?.product?.id;
     if (!productId) return [];
@@ -121,10 +103,12 @@ function OrderDownloadBlock() {
       }
       if (!token) return;
 
-      const updates = {};
+      const updates = new Map();
       await Promise.all(downloads.map(async (dl) => {
         try {
-          const slug = new URL(dl.url).searchParams.get('file');
+          const downloadUrl = new URL(dl.url);
+          if (downloadUrl.origin !== 'https://projects.christitus.com') return;
+          const slug = downloadUrl.searchParams.get('file');
           if (!slug) return;
           const res = await fetch(
             `https://projects.christitus.com/sign.php?file=${encodeURIComponent(slug)}`,
@@ -132,15 +116,18 @@ function OrderDownloadBlock() {
           );
           if (!res.ok) return;
           const data = await res.json();
-          if (data?.url) updates[dl.title] = data.url;
+          const signedUrl = parseDownloadUrl(data?.url);
+          if (signedUrl && new URL(signedUrl).origin === downloadUrl.origin) {
+            updates.set(dl.url, signedUrl);
+          }
         } catch (_) {
           // Network error or sign.php unavailable — silently keep stored URL.
         }
       }));
 
-      if (!cancelled && Object.keys(updates).length > 0) {
+      if (!cancelled && updates.size > 0) {
         setDownloads((prev) =>
-          prev.map((dl) => (updates[dl.title] ? { ...dl, url: updates[dl.title] } : dl))
+          prev.map((dl) => (updates.has(dl.url) ? { ...dl, url: updates.get(dl.url) } : dl))
         );
       }
     }

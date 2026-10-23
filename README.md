@@ -16,7 +16,7 @@ No Node.js/npm build step is required — all files (Liquid, CSS, JS) are served
 | Templating | Liquid |
 | Styles | CSS (no preprocessor) |
 | Scripts | Vanilla JavaScript (no bundler) |
-| CLI | Shopify CLI v3.93+ |
+| CLI | Shopify CLI v4.9.4+ |
 | Validation | Shopify Theme Check |
 
 ## Directory Structure
@@ -45,8 +45,53 @@ templates/      # Page templates as JSON or .liquid
 
 ### Prerequisites
 
-- [Shopify CLI v3.93+](https://shopify.dev/docs/storefronts/themes/tools/cli)
-- A Shopify Partner account with access to the store
+- [Shopify CLI v4.9.4+](https://shopify.dev/docs/storefronts/themes/tools/cli)
+- A store owner account or staff/collaborator account with Themes permission
+
+### First-time setup
+
+Use Node.js 22.12+ and Git 2.28+ with the current Shopify CLI:
+
+```sh
+npm install -g @shopify/cli@latest
+shopify version
+shopify theme check --no-color --fail-level error
+shopify theme list --store <store>.myshopify.com
+```
+
+The last command prompts for Shopify authentication. Use the store owner account
+or a staff/collaborator account with Themes permission. The storefront has no npm
+install or build step. The main theme is connected to this repository; publishing
+changes to its connected branch can update the store.
+
+### Customer-account download app
+
+The separate `customer-account-app/` has its own dependencies and deployment.
+Use Node.js 24 LTS (the version validated on this system).
+Install the committed dependency versions and run its checks from these directories:
+
+```sh
+cd customer-account-app
+npm ci
+npm audit
+cd extensions/order-downloads
+npm ci
+npm audit
+npm test
+cd ../..
+npm run build
+```
+
+Download links must be absolute HTTPS URLs without embedded credentials. Plain
+URLs, JSON link objects, and JSON URL lists are accepted; lists use the last URL.
+The storefront escapes download values when placing them in HTML attributes.
+
+Line-item properties are customer-controlled and are not proof of purchase.
+The external `projects.christitus.com/sign.php` and download backend must verify
+customer identity and purchased-product entitlement before signing or serving
+files. Those backend sources are excluded from this repository and are not
+covered by its tests. Do not put unrestricted private file URLs in storefront
+metafields: values rendered into a hidden input are publicly readable.
 
 ### Local Dev Server
 
