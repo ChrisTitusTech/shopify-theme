@@ -9,10 +9,10 @@ yarn-debug.log*
 yarn-error.log*
 .pnp
 .pnp.js
-package-lock.json
 
 # Shopify CLI / app build artefacts
 .shopify/
+customer-account-app/extensions/*/manifest.json
 dist/
 build/
 .cache/
