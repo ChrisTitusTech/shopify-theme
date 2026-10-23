@@ -1,4 +1,13 @@
 {{ 'section-main-page.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign is_troubleshooting = false
+  if template.suffix == 'troubleshooting' or page.handle == 'troubleshooting'
+    assign is_troubleshooting = true
+  endif
+-%}
+{% if is_troubleshooting %}
+  {{ 'section-troubleshooting.css' | asset_url | stylesheet_tag }}
+{% endif %}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -14,7 +23,7 @@
   }
 {%- endstyle -%}
 
-<div class="page-width page-width--narrow section-{{ section.id }}-padding">
+<div class="page-width page-width--narrow{% if is_troubleshooting %} ctt-troubleshooting{% endif %} section-{{ section.id }}-padding">
   <h1 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
     {{ page.title | escape }}
   </h1>

@@ -35,44 +35,47 @@
    ----------------------------------------------------------------------------- */
 
 :root {
-  --ctt-bg:           #ffffff;
-  --ctt-bg-elevated:  #f8f9fa;
-  --ctt-bg-subtle:    #e9ecef;
-  --ctt-bg-row-alt:   #f8f9fa;
-  --ctt-text:         #212529;
-  --ctt-text-muted:   #495057;
-  --ctt-text-subtle:  #6c757d;
-  --ctt-border:       #dee2e6;
-  --ctt-border-ui:    #dee2e6;
-  --ctt-accent:       #0e86c8;
-  --ctt-accent-hover: #0a6fa8;
-  --ctt-accent-rgb:   14, 134, 200;
+  --ctt-bg:           #f4f8fb;
+  --ctt-bg-elevated:  #ffffff;
+  --ctt-bg-subtle:    #e6f0f6;
+  --ctt-bg-row-alt:   #ffffff;
+  --ctt-text:         #101820;
+  --ctt-text-muted:   #50606d;
+  --ctt-text-subtle:  #50606d;
+  --ctt-border:       #c6d5df;
+  --ctt-border-ui:    #c6d5df;
+  --ctt-accent:       #126b94;
+  --ctt-accent-hover: #07557c;
+  --ctt-accent-rgb:   18, 107, 148;
   --ctt-overlay:      rgba(0, 0, 0, 0.4);
+  --ctt-accent-ink:   #ffffff;
+  --ctt-radius:       2px;
   /* Dawn RGB overrides (used via rgb(var(--color-*)) in Dawn's base.css) */
-  --color-background: 255, 255, 255;
-  --color-foreground: 33, 37, 41;
-  --color-link:       14, 134, 200;
+  --color-background: 244, 248, 251;
+  --color-foreground: 16, 24, 32;
+  --color-link:       18, 107, 148;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --ctt-bg:           #1a1b1e;
-    --ctt-bg-elevated:  #25262b;
-    --ctt-bg-subtle:    #2c2e33;
-    --ctt-bg-row-alt:   #25262b;
-    --ctt-text:         #e9ecef;
-    --ctt-text-muted:   #ced4da;
-    --ctt-text-subtle:  #adb5bd;
-    --ctt-border:       #373a40;
-    --ctt-border-ui:    #373a40;
-    --ctt-accent:       #0e86c8;
-    --ctt-accent-hover: #1a9fdf;
-    --ctt-accent-rgb:   14, 134, 200;
+    --ctt-bg:           #071018;
+    --ctt-bg-elevated:  #0e1b26;
+    --ctt-bg-subtle:    #162735;
+    --ctt-bg-row-alt:   #0e1b26;
+    --ctt-text:         #f5f8fb;
+    --ctt-text-muted:   #b2c1cd;
+    --ctt-text-subtle:  #b2c1cd;
+    --ctt-border:       #2d4658;
+    --ctt-border-ui:    #2d4658;
+    --ctt-accent:       #59d0f7;
+    --ctt-accent-hover: #8addf8;
+    --ctt-accent-rgb:   89, 208, 247;
     --ctt-overlay:      rgba(0, 0, 0, 0.6);
+    --ctt-accent-ink:   #04141c;
     /* Dawn RGB overrides */
-    --color-background: 26, 27, 30;
-    --color-foreground: 233, 236, 239;
-    --color-link:       14, 134, 200;
+    --color-background: 7, 16, 24;
+    --color-foreground: 245, 248, 251;
+    --color-link:       89, 208, 247;
   }
 }
 
@@ -81,19 +84,19 @@
    them back so the palette applies on every page section. */
 .color-scheme-1, .color-scheme-2, .color-scheme-3,
 .color-scheme-4, .color-scheme-5 {
-  --color-background:    255, 255, 255;
-  --color-foreground:    33, 37, 41;
-  --color-link:          14, 134, 200;
-  --gradient-background: #ffffff;
+  --color-background:    244, 248, 251;
+  --color-foreground:    16, 24, 32;
+  --color-link:          18, 107, 148;
+  --gradient-background: #f4f8fb;
 }
 
 @media (prefers-color-scheme: dark) {
   .color-scheme-1, .color-scheme-2, .color-scheme-3,
   .color-scheme-4, .color-scheme-5 {
-    --color-background:    26, 27, 30;
-    --color-foreground:    233, 236, 239;
-    --color-link:          14, 134, 200;
-    --gradient-background: #1a1b1e;
+    --color-background:    7, 16, 24;
+    --color-foreground:    245, 248, 251;
+    --color-link:          89, 208, 247;
+    --gradient-background: #071018;
   }
 }
 
@@ -109,8 +112,8 @@ body {
 
 body {
   font-family: 'PT Sans', sans-serif !important;
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: 16px;
+  line-height: 1.55;
   letter-spacing: 0;
 }
 
@@ -120,11 +123,11 @@ body {
   }
 }
 
-h1, .h1 { font-size: 50px; font-weight: 700; }
-h2, .h2 { font-size: 40px; font-weight: 700; }
-h3, .h3 { font-size: 30px; font-weight: 700; }
-h4, .h4 { font-size: 26px; font-weight: 700; }
-h5, .h5 { font-size: 20px; font-weight: 700; }
+h1, .h1 { font-size: clamp(32px, 4vw, 44px); font-weight: 700; }
+h2, .h2 { font-size: 30px; font-weight: 700; }
+h3, .h3 { font-size: 24px; font-weight: 700; }
+h4, .h4 { font-size: 20px; font-weight: 700; }
+h5, .h5 { font-size: 18px; font-weight: 700; }
 h6, .h6 { font-size: 16px; font-weight: 400; }
 
 h1, h2, h3, h4, h5, h6,
@@ -160,11 +163,11 @@ a:hover {
 button[type="submit"],
 input[type="submit"] {
   background-color: var(--ctt-accent) !important;
-  color: #000000 !important;
+  color: var(--ctt-accent-ink) !important;
   border-color: var(--ctt-accent) !important;
   font-family: 'PT Sans', sans-serif;
   font-weight: 700;
-  border-radius: 4px;
+  border-radius: var(--ctt-radius);
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
@@ -174,7 +177,7 @@ button[type="submit"]:hover,
 input[type="submit"]:hover {
   background-color: var(--ctt-accent-hover) !important;
   border-color: var(--ctt-accent-hover) !important;
-  color: #000000 !important;
+  color: var(--ctt-accent-ink) !important;
 }
 
 .button--secondary,
@@ -182,13 +185,13 @@ input[type="submit"]:hover {
   background-color: transparent !important;
   color: var(--ctt-accent) !important;
   border: 1px solid var(--ctt-accent) !important;
-  border-radius: 4px;
+  border-radius: var(--ctt-radius);
 }
 
 .button--secondary:hover,
 .button--tertiary:hover {
   background-color: var(--ctt-accent) !important;
-  color: #000000 !important;
+  color: var(--ctt-accent-ink) !important;
 }
 
 /* -----------------------------------------------------------------------------
@@ -200,14 +203,14 @@ input[type="submit"]:hover {
 .product-card-wrapper .card {
   background-color: var(--ctt-bg-elevated);
   border-color: var(--ctt-border) !important;
-  border-radius: 4px;
-  box-shadow: 0px 10px 50px 0px rgba(0, 0, 0, 0.25);
+  border-radius: var(--ctt-radius);
+  box-shadow: none;
   transition: box-shadow 0.2s ease;
 }
 
 .card:hover,
 .card__inner:hover {
-  box-shadow: 0px 10px 50px 0px rgba(var(--ctt-accent-rgb), 0.15);
+  box-shadow: 0 4px 14px rgba(var(--ctt-accent-rgb), 0.1);
 }
 
 .card__heading a,
@@ -295,7 +298,7 @@ input[type="submit"]:hover {
 
 .cart-count-bubble {
   background-color: var(--ctt-accent);
-  color: #000000;
+  color: var(--ctt-accent-ink);
 }
 
 .header__icon--menu svg {
@@ -412,7 +415,7 @@ code {
   background-color: var(--ctt-bg-elevated);
   color: var(--ctt-accent);
   padding: 0.1em 0.4em;
-  border-radius: 4px;
+  border-radius: var(--ctt-radius);
   font-size: 0.9em;
 }
 
@@ -420,7 +423,7 @@ pre {
   background-color: var(--ctt-bg-elevated);
   color: var(--ctt-text);
   padding: 1.25rem;
-  border-radius: 4px;
+  border-radius: var(--ctt-radius);
   overflow-x: auto;
   border: 1px solid var(--ctt-border);
 }
@@ -628,7 +631,7 @@ mark,
 
 .product__description {
   color: var(--ctt-text-muted);
-  line-height: 1.7;
+  line-height: 1.55;
 }
 
 .swatch-input__input + .swatch-input__label,
@@ -715,14 +718,14 @@ nav[aria-label="Breadcrumb"] a:hover {
 
 /* Increase mobile side padding so content doesn't touch screen edges */
 .page-width {
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 @media screen and (min-width: 750px) {
   .page-width {
-    padding-left: 5rem;
-    padding-right: 5rem;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 }
 
@@ -753,7 +756,7 @@ nav[aria-label="Breadcrumb"] a:hover {
 
 ::-webkit-scrollbar-thumb {
   background: var(--ctt-border-ui);
-  border-radius: 4px;
+  border-radius: var(--ctt-radius);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -771,7 +774,7 @@ nav[aria-label="Breadcrumb"] a:hover {
 .pagination__item a:hover,
 .pagination__item button:hover {
   background-color: var(--ctt-accent);
-  color: #000000;
+  color: var(--ctt-accent-ink);
   border-color: var(--ctt-accent);
 }
 
@@ -797,3 +800,197 @@ hr {
 }
 
 
+
+/* Compact storefront layout, adapted from christitus.com. Keep Dawn's grid,
+   drawer, product form, and checkout behavior intact. */
+.page-width {
+  max-width: 1228px; /* 1180px content plus desktop gutters. */
+}
+
+.page-width--narrow {
+  max-width: 808px;
+}
+
+.header-wrapper .header {
+  min-height: 64px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.header__menu-item {
+  padding: 10px 12px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.header__heading-link {
+  padding: 4px;
+}
+
+.header__icon {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.h0, .hxl, .hxxl {
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.15;
+}
+
+.main-page-title.page-title,
+.title-wrapper-with-link {
+  margin-bottom: 24px;
+}
+
+.main-page-title {
+  font-size: clamp(30px, 4vw, 40px);
+  letter-spacing: -0.025em;
+}
+
+.product__title h1 {
+  font-size: clamp(28px, 3vw, 38px);
+}
+
+.product__info-container > * + * {
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+
+.product__description :is(p, ul, ol) {
+  margin-block: 12px;
+}
+
+.card-wrapper .card {
+  border: 1px solid var(--ctt-border);
+  border-radius: var(--ctt-radius);
+}
+
+.card-wrapper .card__inner {
+  border: 0;
+  box-shadow: none;
+}
+
+.card__information {
+  padding: 14px;
+}
+
+.card__heading {
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.card-information .price {
+  font-size: 16px;
+}
+
+.image-with-text .image-with-text__content {
+  padding: clamp(20px, 3vw, 36px);
+}
+
+.image-with-text__content > * + * {
+  margin-top: 16px;
+}
+
+.image-with-text__text :is(p, ul, ol) {
+  margin-block: 12px;
+}
+
+.rte :is(p, ul, ol) {
+  margin-block: 12px;
+}
+
+.rte li {
+  margin-bottom: 6px;
+}
+
+.button {
+  min-height: 44px;
+  padding: 10px 20px;
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.footer .footer__content-top {
+  padding-top: 20px;
+  padding-bottom: 16px;
+}
+
+.footer .footer__content-bottom {
+  padding-top: 16px;
+  padding-bottom: 20px;
+}
+
+.footer .footer__localization {
+  padding: 0;
+}
+
+.footer .footer__copyright {
+  margin-top: 12px;
+}
+
+@media screen and (max-width: 749px) {
+  .header-wrapper .header {
+    min-height: 60px;
+    padding-inline: 16px;
+  }
+
+  .card__heading {
+    font-size: 18px;
+  }
+
+  .card__information {
+    padding: 10px;
+  }
+
+  .image-with-text .image-with-text__content {
+    padding: 20px 16px;
+  }
+}
+
+/* Dawn's gradient and icon rules otherwise retain the configured scheme colors. */
+.gradient {
+  background: var(--ctt-bg);
+}
+
+.header__icon,
+.list-social__link {
+  color: var(--ctt-text);
+}
+
+.featured-product {
+  padding-block: 20px;
+}
+
+.featured-product .product-media-container.constrain-height.media-type-image {
+  --constrained-min-height: 0px;
+  --constrained-height: clamp(220px, 36vw, 480px);
+}
+
+.featured-product .product__media img {
+  object-fit: contain;
+}
+
+/* Keep product tiles even when book covers and app screenshots have different ratios. */
+.product-card-wrapper .card--media:not(.card--horizontal):not(.card--shape) .card__inner.ratio::before {
+  padding-bottom: 75%;
+}
+
+.product-card-wrapper .card--media:not(.card--shape) .card__media img {
+  object-fit: contain;
+}
+
+.card-wrapper .card.card--standard > .card__content .card__information {
+  padding: 14px;
+}
+
+@media (max-width: 749px) {
+  .card-wrapper .card.card--standard > .card__content .card__information {
+    padding: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a, .button, .card, .card__inner {
+    transition: none;
+  }
+}
